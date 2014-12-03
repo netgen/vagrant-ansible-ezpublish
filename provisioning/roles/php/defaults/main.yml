@@ -1,0 +1,7 @@
+---
+# defaults file for php
+PROJECT_ROOT: "/var/www"
+
+use_php56: false
+
+use_xdebug: false

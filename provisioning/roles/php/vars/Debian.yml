@@ -1,0 +1,4 @@
+---
+# vars file for Debian
+
+php_mods_available: /etc/php5/mods-available/
