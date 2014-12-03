@@ -1,0 +1,30 @@
+---
+# vars file for common
+
+env:
+ RUNLEVEL: 1
+
+common_packages:
+  - gcc
+  - curl
+  - make
+  - git-core
+  - vim
+  - ack-grep
+  - htop
+  - build-essential
+  - wget
+  - python-software-properties
+  - software-properties-common
+  - unzip
+  - tmux
+  - ntp
+  - python-psycopg2
+  - python-setuptools
+  - libreadline6
+  - libreadline6-dev
+  - ncurses-dev
+  - python-dev
+  - libpq-dev
+
+PROJECT_TIMEZONE: 'America/New_York'
