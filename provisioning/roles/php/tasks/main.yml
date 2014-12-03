@@ -69,3 +69,35 @@
   command: php5enmod xdebug
   ignore_errors: true
   when: ansible_os_family == "Debian" and use_xdebug == true
+
+- name: Install the php-fpm specific libraries (APT)
+  apt: name={{ item }} state=present update_cache=yes
+  # located in vars/main.yml
+  with_items: php_fpm_packages
+  environment: env
+  when: ansible_os_family == "Debian" and use_php5_fpm == true
+  tags: [php, php_fpm, packages]
+
+  # on a newly built box I encountered the following error:
+  # [crit] 9162#0: *18 connect() to unix:/var/run/php5-fpm.sock failed (13: Permission denied) while connecting to upstream
+  # AFAIU the problem was caused by the fix implemented for https://bugs.php.net/bug.php?id=67060
+  # The solution is from http://stackoverflow.com/a/23487409 (second addition)
+- name: Copy the www pool additional configuration
+  template: src=fpm.j2
+            dest={{ php_fpm_pool_d_path }}/{{ item['filename'] }}.conf
+            backup=yes
+            owner=root
+            group=root
+            mode=0644
+  # located in defaults/main.yml
+  with_items: php_fpm_www_additional
+  when: php_fpm_www_additional|lower != 'none' and use_php5_fpm == true
+  notify:
+   - restart php5-fpm
+  tags: [configuration,php_fpm]
+
+- name: ensure php5-fpm service is up
+  action: service name=php5-fpm state=started
+  when: ansible_os_family == "Debian" and use_php5_fpm == true
+  tags: [php, php_fpm]
+

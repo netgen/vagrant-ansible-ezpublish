@@ -16,3 +16,6 @@ php_packages:
 
 php_xdebug:
   - php5-xdebug
+
+php_fpm_packages:
+  - php5-fpm

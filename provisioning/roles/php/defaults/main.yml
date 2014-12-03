@@ -5,3 +5,13 @@ PROJECT_ROOT: "/var/www"
 use_php56: false
 
 use_xdebug: false
+
+use_php5_fpm: true
+
+php_fpm_www_additional:
+  - filename: www_additional
+    name: www
+    listen.owner: www-data
+    listen.group: www-data
+    listen.mode: '0660'
+    pm.max_children: 50
