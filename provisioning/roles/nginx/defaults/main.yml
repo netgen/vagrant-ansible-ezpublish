@@ -1,0 +1,8 @@
+---
+# defaults file for nginx
+PROJECT_ROOT: "/var/www"
+
+NGINX_SITES_ENABLED_CONFIG_PATH: "/etc/nginx/sites-enabled/"
+NGINX_SITES_AVAILABLE_CONFIG_PATH: "/etc/nginx/sites-available/"
+
+APPLICATION_ENVIRONMENT: "dev"
