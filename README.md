@@ -41,10 +41,14 @@ and reset it (on OSX it is cmd+t). This is due to some weird bug somewhere on in
 this ubuntu cloud image.
 After the initial virtual machine build, you will not need to use this.
 
+## Windows Support
+
+HERE BE DRAGONS, will be added in some manner at a later time.
+
 ## Deploying to remote servers
 
 ```
-ansible-playbook -i provisioning/inventories/production provisioning/admin.yml -u ubuntu --sudo
+ansible-playbook -i provisioning/inventories/production provisioning/production.yml -u ubuntu --sudo
 ```
 
 [Vagrant]: http://www.vagrantup.com/downloads.html
