@@ -11,8 +11,8 @@ PROJECT_ROOT: "/var/www"
 
 Variables:
 - use_php56 - should PHP 5.6 be installed, default is false
-
 - use_xdebug - should XDebug be installed and enabled, default is false
+- use_php5_fpm - should php-fpm be installed and used, default is true
 
 Dependencies
 ------------
