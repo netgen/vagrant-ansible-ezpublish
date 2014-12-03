@@ -63,4 +63,9 @@
   # which sometimes gets updated, and sometimes does not
   copy: dest={{ php_mods_available }}/xdebug.ini content="; configuration for php xdebug module\n; priority=20\nzend_extension=xdebug.so\n"
   ignore_errors: true
-  when: ansible_os_family == "Debian" and use_xdebug == true and use_php56 == true
+  when: ansible_os_family == "Debian" and use_xdebug == true
+
+- name: Enable XDebug
+  command: php5enmod xdebug
+  ignore_errors: true
+  when: ansible_os_family == "Debian" and use_xdebug == true
