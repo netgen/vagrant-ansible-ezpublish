@@ -12,6 +12,8 @@
 
 - name: make sure that there is no default website
   file: path={{ NGINX_SITES_ENABLED_CONFIG_PATH }}/default state=absent
+  notify:
+  - reload nginx
   tags: [nginx]
 
 - name: installing website config {{ name }}
