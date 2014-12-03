@@ -39,6 +39,16 @@
   when: ansible_os_family == "Debian" and php_packages|lower != 'none'
   tags: [php, packages]
 
+- name: Make timezone configuration available to php
+  copy: dest={{ php_mods_available }}/timezone.ini content="; configuration for php timzeonze\n;[Date]\ndate.timezone=America/New_York\n"
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+- name: Enable timezone configuration available to php
+  command: php5enmod timezone
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
 - name: Install xdebug
   apt: name={{ item }} state=present update_cache=yes
   # located in vars/main.yml
