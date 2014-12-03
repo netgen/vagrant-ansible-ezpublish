@@ -11,7 +11,7 @@ None.
 Role Variables
 --------------
 
-- PROJECT_TIMEZONE variable shuld be set as group/host var
+- PROJECT_TIMEZONE variable should be set as group/host variables
 
 Dependencies
 ------------
