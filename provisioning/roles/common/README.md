@@ -8,6 +8,11 @@ Requirements
 
 None.
 
+Role Variables
+--------------
+
+- PROJECT_TIMEZONE variable shuld be set as group/host var
+
 Dependencies
 ------------
 
