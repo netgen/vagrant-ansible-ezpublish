@@ -12,6 +12,8 @@ Defaults that should be set as group/host variables:
 - NGINX_SITES_ENABLED_CONFIG_PATH - location of the sites-enabled nginx directory
 - NGINX_SITES_AVAILABLE_CONFIG_PATH - location of the sites-available nginx directory
 - APPLICATION_ENVIRONMENT - should be obvious
+
+Variables:
 - name - name of the application that will be used as filename for website and for log names
 
 Dependencies
@@ -22,11 +24,13 @@ None.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-             - { role: nginx, name: symfony }
+```
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - { role: nginx, name: symfony }
+```
 
 Author Information
 ------------------
