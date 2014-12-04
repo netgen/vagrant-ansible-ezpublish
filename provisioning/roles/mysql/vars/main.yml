@@ -1,0 +1,6 @@
+---
+# vars file for mysql
+
+mysql_packages:
+  - python-mysqldb
+  - mysql-server
