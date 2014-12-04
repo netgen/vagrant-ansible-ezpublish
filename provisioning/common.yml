@@ -1,0 +1,23 @@
+---
+- hosts: all
+  sudo: yes
+  # You should remember this from my puppet rants
+  # Execute the apt-get update only if it was last executed more than 12 hours ago
+  pre_tasks:
+    - name: check apt last update
+      stat: path=/var/cache/apt
+      register: apt_cache_stat
+      when: ansible_os_family == "Debian"
+    - name: update apt if needed
+      apt: update_cache=yes
+      when: ansible_os_family == "Debian" and ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
+    # the oh so very important bit if you are going to add apt repos
+    - name: install python-pycurl
+      apt: pkg=python-pycurl state=latest
+      when: ansible_os_family == "Debian"
+
+  roles:
+    - common
+    - { role: nginx, name: symfony }
+
+  tasks:
