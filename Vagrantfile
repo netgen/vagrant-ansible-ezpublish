@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
   end
 
-  if OS.windows? [then]
+  if OS.windows?
       puts "Vagrant launched from windows."
   else
     config.vm.provision "ansible" do |ansible|
