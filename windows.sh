@@ -4,7 +4,8 @@ if [ $(dpkg-query -W -f='${Status}' ansible 2>/dev/null | grep -c "ok installed"
 then
     echo "Add APT repositories"
     export DEBIAN_FRONTEND=noninteractive
-    sudo apt-get install -qq software-properties-common &> /dev/null || exit 1
+    sudo apt-get install -y python-software-properties
+    sudo apt-get install -y python-setuptools
 
     echo "Installing Ansible"
     sudo easy_install pip
@@ -12,5 +13,4 @@ then
     echo "Ansible installed"
 fi
 
-cd /vagrant/provisioning
-ansible-playbook vagrant.yml --connection=local
+ansible-playbook /vagrant/provisioningvagrant.yml -c local -i localhost,
