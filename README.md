@@ -43,7 +43,7 @@ After the initial virtual machine build, you will not need to use this.
 
 ## Windows Support
 
-HERE BE DRAGONS, will be added in some manner at a later time.
+Shell script will run from within the vm to provision the setup
 
 ## Deploying to remote servers
 
@@ -53,7 +53,3 @@ ansible-playbook -i provisioning/inventories/production provisioning/production.
 
 [Vagrant]: http://www.vagrantup.com/downloads.html
 [Ansible]: http://docs.ansible.com/intro_installation.html
-
-## Documentation
-
-For developer documentation see DOCS.md in this repo.
