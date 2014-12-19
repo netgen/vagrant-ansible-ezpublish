@@ -56,11 +56,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   if OS.windows?
-      puts "Vagrant launched from windows."
       config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-      config.vm.provision :shell,
-                          :keep_color => true,
-                          :inline => "export PYTHONUNBUFFERED=1 && export ANSIBLE_FORCE_COLOR=1 && cd /vagrant/provisioning && ./windows.sh"
+      config.vm.provision :shell, path: "provisioning/windows.sh",
+                          :keep_color => true
+
   else
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/vagrant.yml"
