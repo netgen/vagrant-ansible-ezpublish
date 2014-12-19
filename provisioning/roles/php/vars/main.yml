@@ -13,6 +13,11 @@ php_packages:
   - php5-mcrypt
   - php5-curl
   - php5-gd
+  - php5-intl
+  - php5-xsl
+  - imagemagick
+  - php5-imagick
+  - php5-gd
 
 php_xdebug:
   - php5-xdebug
