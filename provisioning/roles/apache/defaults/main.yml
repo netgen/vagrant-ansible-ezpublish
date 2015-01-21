@@ -1,0 +1,11 @@
+---
+# defaults file for apache
+PROJECT_ROOT: "/var/www"
+
+APACHE_SITES_ENABLED_CONFIG_PATH: "/etc/apache2/sites-enabled"
+APACHE_SITES_AVAILABLE_CONFIG_PATH: "/etc/apache2/sites-available"
+
+IP_ADDRESS: "*"
+PORT: "80"
+HOST: 
+HOST_ALIAS:

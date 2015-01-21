@@ -19,4 +19,4 @@
         create=True
 
   handlers:
-    - include: roles/nginx/handlers/main.yml
+    - include: roles/apache/handlers/main.yml

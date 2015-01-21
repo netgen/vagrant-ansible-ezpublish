@@ -1,0 +1,33 @@
+---
+
+- name: Install Apache
+  apt: name=apache2 state=present update_cache=yes
+  environment: env
+  when: ansible_os_family == "Debian"
+  tags: [packages]
+
+- name: enable the rewrite module
+  apache2_module: state=present name=rewrite
+
+- name: ensure Apache service is up
+  action: service name=apache2 state=started
+  tags: [apache2]
+
+- name: make sure that there is no default website
+  file: path={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/000-default.conf state=absent
+  notify:
+  - reload Apache
+  tags: [apache2]
+
+- name: installing website config {{ name }}
+  template: src=site.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ name }}.conf
+  notify:
+  - reload Apache
+  tags: [apache2]
+
+- name: create a symlink for website {{ name }}
+  file: src={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ name }}.conf dest={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ name }} state=link
+  # also a handler named restart APACHE is present if needed
+  notify:
+  - reload Apache
+  tags: [apache2]

@@ -1,19 +1,15 @@
 ---
 galaxy_info:
   author: Srdjan Vranac
-  description: Setup nginx for symfony
+  description: Role to setup apache for EzPublish
   company: Code4Hire Kft.
   min_ansible_version: 1.5
-  version: 0.1
   platforms:
   - name: Ubuntu
     versions:
-    - precise
     - trusty
-  - name: Debian
-    versions:
-    - wheezy
   categories:
   - development
   - system
+  - web
 dependencies: []
