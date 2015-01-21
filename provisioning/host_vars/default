@@ -1,0 +1,11 @@
+---
+# project root in the default host (in this case Vagrant box)
+PROJECT_ROOT: "/var/www/ezpublish-community"
+
+# application environment
+APPLICATION_ENVIRONMENT: "dev"
+
+# defaults file for mysql
+USERNAME: "ez"
+PASSWORD: "ez"
+DB_NAME: "ezpublish"
