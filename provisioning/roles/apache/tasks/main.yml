@@ -26,7 +26,7 @@
   tags: [apache2]
 
 - name: create a symlink for website {{ name }}
-  file: src={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ name }}.conf dest={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ name }} state=link
+  file: src={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ name }}.conf dest={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ name }}.conf state=link
   # also a handler named restart APACHE is present if needed
   notify:
   - reload Apache
