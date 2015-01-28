@@ -17,6 +17,6 @@
         state=present
         insertafter=EOF
         create=True
-
-  handlers:
-    - include: roles/apache/handlers/main.yml
+    - name: restart Apache
+      service: name=apache2 state=restarted
+      sudo: yes
