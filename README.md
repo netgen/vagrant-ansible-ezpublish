@@ -41,6 +41,14 @@ and reset it (on OSX it is cmd+t). This is due to some weird bug somewhere on in
 this ubuntu cloud image.
 After the initial virtual machine build, you will not need to use this.
 
+***IMPORTANT***
+
+If vagrant starts complaining about locale and crashes the provisioning, in
+/etc/ssh/ssh_config (or equivalent) comment out
+```
+SendEnv LANG LC_*
+```
+
 ## Windows Support
 
 Shell script will run from within the vm to provision the setup
