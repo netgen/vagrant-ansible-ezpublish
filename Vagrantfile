@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./", "/var/www", type: "nfs"
+  config.vm.synced_folder "./", "/var/www/project", type: "nfs"
 
   config.vm.boot_timeout = 9000
 
