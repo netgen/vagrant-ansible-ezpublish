@@ -5,7 +5,7 @@ Vagrant box, with Ansible provisioning to setup new eZ Publish project.
 
 ## Author
 
-Srdjan Vranac [vranac]
+[Srdjan Vranac]
 
 ## Prerequisites
 
@@ -67,4 +67,4 @@ ansible-playbook -i provisioning/inventories/production provisioning/production.
 [Vagrant]: http://www.vagrantup.com/downloads.html
 [Ansible]: http://docs.ansible.com/intro_installation.html
 [VirtualBox]: https://www.virtualbox.org/wiki/Downloads
-[vranac]: https://github.com/vranac
+[Srdjan Vranac]: https://github.com/vranac
