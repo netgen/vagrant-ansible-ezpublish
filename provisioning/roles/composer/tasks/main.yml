@@ -29,6 +29,6 @@
   # So I set the long timeout, should be enough
   environment:
     COMPOSER_PROCESS_TIMEOUT: "9000"
-  when: ansible_os_family == "Debian" and composer_json.stat.exists and not composer_result|failed
+  when: ansible_os_family == "Debian" and install_vendors == true and composer_json.stat.exists and not composer_result|failed
   tags: [packages,composer]
 

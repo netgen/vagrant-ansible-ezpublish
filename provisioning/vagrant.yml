@@ -5,18 +5,12 @@
 - hosts: default
   sudo: yes
   roles:
+    - nodejs
     - { role: php, use_php56: true, use_xdebug: true }
     - { role: mysql, use_mysql56: true}
-    - { role: composer, use_composer_no_dev: no }
+    - { role: composer, use_composer_no_dev: no, install_vendors: false }
 
   tasks:
-    - name: Update bashrc for with the app environment
-      lineinfile:
-        dest=/home/vagrant/.bashrc
-        line="export APPLICATION_ENVIRONMENT=dev"
-        state=present
-        insertafter=EOF
-        create=True
     - name: restart Apache
       service: name=apache2 state=restarted
       sudo: yes

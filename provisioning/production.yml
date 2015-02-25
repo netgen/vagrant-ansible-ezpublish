@@ -8,15 +8,3 @@
     # - { role: php, use_php56: true, use_xdebug: false }
     # - { role: mysql, use_mysql56: true}
     # - { role: composer, use_composer_no_dev: yes }
-
-  tasks:
-    # - name: Update bashrc for with the app environment
-    #   lineinfile:
-    #     dest=/home/vagrant/.bashrc
-    #     line="export APPLICATION_ENVIRONMENT=prod"
-    #     state=present
-    #     insertafter=EOF
-    #     create=True
-
-  handlers:
-    # - include: roles/nginx/handlers/main.yml

@@ -19,14 +19,14 @@
   - reload Apache
   tags: [apache2]
 
-- name: installing website config {{ name }}
-  template: src=site.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ name }}.conf
+- name: installing website config {{ PROJECT_NAME }}
+  template: src=site.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf
   notify:
   - reload Apache
   tags: [apache2]
 
-- name: create a symlink for website {{ name }}
-  file: src={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ name }}.conf dest={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ name }}.conf state=link
+- name: create a symlink for website {{ PROJECT_NAME }}
+  file: src={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf dest={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf state=link
   # also a handler named restart APACHE is present if needed
   notify:
   - reload Apache
