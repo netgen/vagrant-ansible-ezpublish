@@ -1,7 +1,11 @@
-vagrant-ansible-symfony
-=======================
+vagrant-ansible-ezpublish
+=========================
 
-Vagrant box, with Ansible provisioning to setup new Symfony project.
+Vagrant box, with Ansible provisioning to setup new eZ Publish project.
+
+## Author
+
+Srdjan Vranac [vranac]
 
 ## Prerequisites
 
@@ -12,6 +16,7 @@ If you are using Windows, let me know so I can take a look how to setup the ansi
 You need to have following installed:
 - [Vagrant]
 - [Ansible]
+- [VirtualBox]
 
 ## Local development setup
 
@@ -61,3 +66,5 @@ ansible-playbook -i provisioning/inventories/production provisioning/production.
 
 [Vagrant]: http://www.vagrantup.com/downloads.html
 [Ansible]: http://docs.ansible.com/intro_installation.html
+[VirtualBox]: https://www.virtualbox.org/wiki/Downloads
+[vranac]: https://github.com/vranac
