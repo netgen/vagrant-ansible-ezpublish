@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "55.55.55.100"
+  config.vm.network "private_network", ip: "172.21.12.10"
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./", "/var/www/project", type: "nfs"
+  config.vm.synced_folder "./", "/var/www/project"
 
   config.vm.boot_timeout = 9000
 

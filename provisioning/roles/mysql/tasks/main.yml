@@ -34,6 +34,10 @@
   when: ansible_os_family == "Debian"
   tags: [mysql,packages]
 
+- name: Tune for eZ development
+  copy: src=ez.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+  notify: restart mysql
+
 - name: ensure mysql service is up
   action: service name=mysql state=started
   tags: [mysql,services]

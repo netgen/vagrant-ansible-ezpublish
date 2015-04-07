@@ -50,12 +50,37 @@
   when: ansible_os_family == "Debian"
 
 - name: Customized memory limits
-  copy: dest={{ php_mods_available }}/memory_limits.ini content="; configuration for memory limits\nmemory_limit=512M\nupload_max_filesize=1024M\npost_max_size=1024M\n"
+  copy: dest={{ php_mods_available }}/memory_limits.ini content="; configuration for memory limits\nmemory_limit = 160M\nupload_max_filesize = 1024M\npost_max_size = 1024M\n"
   ignore_errors: true
   when: ansible_os_family == "Debian"
 
 - name: Enable memory limits available to php
   command: php5enmod memory_limits
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+- name: Customized time limits
+  copy: dest={{ php_mods_available }}/time_limits.ini content="; configuration for time limits\nmax_execution_time = 60\nmax_input_time = 90\n"
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+- name: Enable time limits available to php
+  command: php5enmod time_limits
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+- name: Install OpCache
+  command: pecl install zendopcache
+  ignore_errors: true
+  when: use_php56 == false
+
+- name: Configure OpCache
+  copy: src=opcache.ini dest=/etc/php5/mods-available/opcache.ini
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+- name: Enable OpCache
+  command: php5enmod opcache
   ignore_errors: true
   when: ansible_os_family == "Debian"
 
@@ -105,6 +130,12 @@
   notify:
    - restart php5-fpm
   tags: [configuration,php_fpm]
+
+- name: Tune php5-fpm
+  copy: src=php-fpm.conf dest=/etc/php5/fpm/php-fpm.conf owner=root group=root mode=0644
+  notify: restart php5-fpm
+  when: ansible_os_family == "Debian" and use_php5_fpm == true
+  tags: [php_fpm]
 
 - name: ensure php5-fpm service is up
   action: service name=php5-fpm state=started
