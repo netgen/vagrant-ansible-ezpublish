@@ -11,7 +11,8 @@ PROJECT_ROOT: "/var/www"
 
 Variables:
 - use_php56 - should PHP 5.6 be installed, default is false
-- use_xdebug - should XDebug be installed and enabled, default is false
+- use_xdebug - should XDebug be installed, default is false
+- activate_xdebug - should XDebug be activated, default is false
 - use_php5_fpm - should php-fpm be installed and used, default is true
 
 Dependencies
@@ -27,7 +28,7 @@ Example Playbook
 - hosts: all
   sudo: yes
   roles:
-    - { role: php, use_php56: true, use_xdebug: true }
+    - { role: php, use_php56: true, use_xdebug: true, activate_xdebug: true }
 ```
 
 Author Information
