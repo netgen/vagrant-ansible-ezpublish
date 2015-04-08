@@ -5,6 +5,7 @@
 - hosts: default
   sudo: yes
   roles:
+    - kernel
     - nodejs
     - { role: php, use_php56: true, use_xdebug: true }
     - { role: mysql, use_mysql56: true}

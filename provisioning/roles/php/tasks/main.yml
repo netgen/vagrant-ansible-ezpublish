@@ -50,7 +50,7 @@
   when: ansible_os_family == "Debian"
 
 - name: Customized memory limits
-  copy: dest={{ php_mods_available }}/memory_limits.ini content="; configuration for memory limits\nmemory_limit = 160M\nupload_max_filesize = 1024M\npost_max_size = 1024M\n"
+  copy: dest={{ php_mods_available }}/memory_limits.ini content="; configuration for memory limits\nmemory_limit = 256M\nupload_max_filesize = 1024M\npost_max_size = 1024M\n"
   ignore_errors: true
   when: ansible_os_family == "Debian"
 

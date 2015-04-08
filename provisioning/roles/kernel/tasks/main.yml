@@ -1,0 +1,8 @@
+---
+# tasks file for kernel
+- name: Configure kernel with eZ settings
+  copy: src=ez.conf dest=/etc/sysctl.d/90-ez.conf
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+  notify: restart procps
+
