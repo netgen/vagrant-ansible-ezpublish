@@ -11,6 +11,8 @@
 
     <Directory {{ PROJECT_ROOT }}/web/>
         AllowOverride All
+        Order Allow,Deny
+        Allow from all
     </Directory>
 
     ErrorLog ${APACHE_LOG_DIR}/ezpublish-error.log
