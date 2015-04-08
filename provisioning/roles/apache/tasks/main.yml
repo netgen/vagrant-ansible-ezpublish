@@ -6,11 +6,27 @@
   when: ansible_os_family == "Debian"
   tags: [packages]
 
-- name: enable the rewrite module
-  apache2_module: state=present name=rewrite
+- name: enable Apache2 modules
+  apache2_module: state=present name={{ item }}
+  with_items: common_modules
+  notify: restart Apache
+  when: ansible_os_family == "Debian"
+  tags: [apache2]
 
 - name: ensure Apache service is up
   action: service name=apache2 state=started
+  tags: [apache2]
+
+- name: configure mpm prefork
+  copy: src=mpm_prefork.conf dest=/etc/apache2/mods-available/mpm_prefork.conf owner=root group=root mode=0644
+  notify: restart Apache
+  when: ansible_os_family == "Debian"
+  tags: [apache2]
+
+- name: configure security settings
+  copy: src=security.conf dest=/etc/apache2/conf-available/security.conf owner=root group=root mode=0644
+  notify: restart Apache
+  when: ansible_os_family == "Debian"
   tags: [apache2]
 
 - name: make sure that there is no default website

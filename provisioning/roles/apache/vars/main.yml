@@ -1,2 +1,9 @@
 ---
 # vars file for apache
+
+common_modules:
+    - status
+    - rewrite
+    - reqtimeout
+    - deflate
+    - mime_magic
