@@ -3,3 +3,5 @@
 USERNAME: dev
 PASSWORD:
 DB_NAME: dev
+
+use_mysql_dev: true

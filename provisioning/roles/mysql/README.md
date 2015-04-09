@@ -14,6 +14,7 @@ Defaults that should be set as group/host variables:
 
 Variables:
 - use_mysql56 - should mysql 5.6 be used or not, default is false
+- use_mysql_dev - should mysql be tuned for development (light memory use) or production
 
 Dependencies
 ------------
