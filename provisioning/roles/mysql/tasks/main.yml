@@ -39,9 +39,15 @@
   tags: [mysql,services]
 
 - name: Tune for eZ development
-  copy: src=ez-dev.cnf dest=/etc/mysql/conf.d/ez-dev.cnf owner=root group=root mode=0644
+  copy: src=ez-dev.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
   notify: restart mysql
   when: use_mysql_dev == true
+  tags: [mysql]
+
+- name: Tune for eZ production
+  copy: src=ez-prod.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+  notify: restart mysql
+  when: use_mysql_dev == false
   tags: [mysql]
 
 - name: Create the dev database
