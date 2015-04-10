@@ -6,6 +6,8 @@ use_php56: false
 
 use_xdebug: false
 
+activate_xdebug: false
+
 use_php5_fpm: true
 
 php_fpm_www_additional:
