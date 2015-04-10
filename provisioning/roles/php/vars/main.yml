@@ -18,10 +18,12 @@ php_packages:
   - imagemagick
   - php5-imagick
   - php5-gd
-  - libapache2-mod-php5
 
 php_xdebug:
   - php5-xdebug
+
+php_nofpm_packages:
+  - libapache2-mod-php5
 
 php_fpm_packages:
   - php5-fpm

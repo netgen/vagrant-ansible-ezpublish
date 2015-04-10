@@ -1,10 +1,11 @@
 ---
 
-- name: Install Apache
-  apt: name=apache2 state=present update_cache=yes
+- name: Install Apache packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: apache_packages
   environment: env
   when: ansible_os_family == "Debian"
-  tags: [packages]
+  tags: [apache2, packages]
 
 - name: enable Apache2 modules
   apache2_module: state=present name={{ item }}
