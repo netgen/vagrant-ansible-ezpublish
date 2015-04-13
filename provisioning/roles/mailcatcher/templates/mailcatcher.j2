@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+description "mailcatcher"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+
+exec mailcatcher --foreground --ip {{ MAILCATCHER_IP }} --smtp-ip {{ MAILCATCHER_SMTP_IP }} --smtp-port {{ MAILCATCHER_SMTP_PORT }} --http-ip {{ MAILCATCHER_HTTP_IP }} --http-port {{ MAILCATCHER_HTTP_PORT }}
