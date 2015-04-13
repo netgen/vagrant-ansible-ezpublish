@@ -1,0 +1,13 @@
+---
+# handlers file for mailcatcher
+- name: start mailcatcher
+  service: name=mailcatcher state=started
+  sudo: yes
+
+- name: stop mailcatcher
+  service: name=mailcatcher state=stopped
+  sudo: yes
+
+- name: restart mailcatcher
+  service: name=mailcatcher state=restarted
+  sudo: yes
