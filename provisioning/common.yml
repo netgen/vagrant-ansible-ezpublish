@@ -28,6 +28,6 @@
 
   roles:
     - common
-    - { role: apache }
+    - { role: apache, use_htaccess: false }
 
   tasks:

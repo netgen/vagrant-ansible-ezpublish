@@ -19,6 +19,11 @@ Role Variables
 - HOST - host to be used in vhost, defaults to NONE 
 - HOST_ALIAS - host alias to be used in vhost, defaults to NONE
 
+- use_htaccess - Should .htaccess file be used for running eZ Publish web, defaults to false
+
+- EZPUBLISH_ENVIRONMENT - Defines which environment will be used when running eZ Publish, defaults to "dev", applicable when use_htaccess == false
+- EZPUBLISH_TRUSTED_PROXIES: Defines trusted proxies when running eZ Publish, defaults to "127.0.0.1", applicable when use_htaccess == false
+
 Dependencies
 ------------
 
@@ -40,7 +45,7 @@ Or using parameters:
 - hosts: all
   sudo: yes
   roles:
-    - { role: apache, name: symfony }
+    - { role: apache, name: symfony, use_htaccess: false }
 ```
 
 Author Information
