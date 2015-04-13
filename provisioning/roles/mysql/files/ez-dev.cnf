@@ -1,0 +1,15 @@
+# development-only setup, still light on memory but usable enough
+
+[mysqld]
+max_connections = 50
+key_buffer_size = 8M
+innodb_buffer_pool_size = 256M
+table_open_cache = 2048
+sort_buffer_size = 16M
+read_buffer_size = 8M
+read_rnd_buffer_size = 16M
+thread_cache_size = 4
+query_cache_type = 1
+query_cache_size = 16M
+tmp_table_size = 128M
+max_heap_table_size = 128M

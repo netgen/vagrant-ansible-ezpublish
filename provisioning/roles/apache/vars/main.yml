@@ -1,2 +1,16 @@
 ---
 # vars file for apache
+
+apache_packages:
+    - apache2
+    - libapache2-mod-fastcgi
+
+common_modules:
+    - status
+    - rewrite
+    - reqtimeout
+    - deflate
+    - mime_magic
+    - alias
+    - fastcgi
+    - actions

@@ -38,6 +38,18 @@
   action: service name=mysql state=started
   tags: [mysql,services]
 
+- name: Tune for eZ development
+  copy: src=ez-dev.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+  notify: restart mysql
+  when: use_mysql_dev == true
+  tags: [mysql]
+
+- name: Tune for eZ production
+  copy: src=ez-prod.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+  notify: restart mysql
+  when: use_mysql_dev == false
+  tags: [mysql]
+
 - name: Create the dev database
   mysql_db: name={{ DB_NAME }} state=present encoding=utf8 collation=utf8_general_ci
   tags: [mysql]

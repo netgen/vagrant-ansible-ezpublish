@@ -4,3 +4,11 @@
 - name: restart php5-fpm
   service: name=php5-fpm state=restarted
   sudo: yes
+
+- name: restart Apache
+  service: name=apache2 state=restarted
+  sudo: yes
+
+- name: reload Apache
+  service: name=apache2 state=reloaded
+  sudo: yes
