@@ -100,10 +100,10 @@
   ignore_errors: true
   when: ansible_os_family == "Debian" and use_xdebug == true
 
-- name: Enable XDebug
-  command: php5enmod xdebug
+- name: Disable XDebug
+  command: php5dismod xdebug
   ignore_errors: true
-  when: ansible_os_family == "Debian" and use_xdebug == true
+  when: ansible_os_family == "Debian" and use_xdebug == true and activate_xdebug == false
 
 - name: Install the php-fpm specific libraries (APT)
   apt: name={{ item }} state=present update_cache=yes
