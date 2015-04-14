@@ -39,35 +39,10 @@
   when: ansible_os_family == "Debian" and php_packages|lower != 'none'
   tags: [php, packages]
 
-- name: Make timezone configuration available to php
-  copy: dest={{ php_mods_available }}/timezone.ini content="; configuration for php timezone\n;[Date]\ndate.timezone=America/New_York\n"
-  ignore_errors: true
+- name: Create CLI php.ini configuration
+  template: src=php.ini.cli.j2 dest=/etc/php5/cli/php.ini backup=yes owner=root group=root mode=0644
   when: ansible_os_family == "Debian"
-
-- name: Enable timezone configuration available to php
-  command: php5enmod timezone
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
-
-- name: Customized memory limits
-  copy: dest={{ php_mods_available }}/memory_limits.ini content="; configuration for memory limits\nmemory_limit = 256M\nupload_max_filesize = 1024M\npost_max_size = 1024M\n"
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
-
-- name: Enable memory limits available to php
-  command: php5enmod memory_limits
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
-
-- name: Customized time limits
-  copy: dest={{ php_mods_available }}/time_limits.ini content="; configuration for time limits\nmax_execution_time = 60\nmax_input_time = 90\n"
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
-
-- name: Enable time limits available to php
-  command: php5enmod time_limits
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
+  tags: [configuration, php]
 
 - name: Install OpCache
   command: pecl install zendopcache
@@ -113,6 +88,14 @@
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm, packages]
 
+- name: Remove the php-fpm specific libraries (APT)
+  apt: name={{ item }} state=absent update_cache=yes
+  # located in vars/main.yml
+  with_items: php_fpm_packages
+  environment: env
+  when: ansible_os_family == "Debian" and use_php5_fpm == false
+  tags: [php, php_fpm, packages]
+
 - name: Install the php non-fpm specific libraries (APT)
   apt: name={{ item }} state=present update_cache=yes
   # located in vars/main.yml
@@ -120,6 +103,20 @@
   environment: env
   when: ansible_os_family == "Debian" and use_php5_fpm == false
   tags: [php, packages]
+
+- name: Remove the php non-fpm specific libraries (APT)
+  apt: name={{ item }} state=absent update_cache=yes
+  # located in vars/main.yml
+  with_items: php_nofpm_packages
+  environment: env
+  when: ansible_os_family == "Debian" and use_php5_fpm == true
+  tags: [php, packages]
+
+- name: Create Apache php.ini configuration
+  template: src=php.ini.fpm.j2 dest=/etc/php5/apache2/php.ini backup=yes owner=root group=root mode=0644
+  when: ansible_os_family == "Debian" and use_php5_fpm == false
+  notify: restart Apache
+  tags: [php, configuration]
 
   # on a newly built box I encountered the following error:
   # [crit] 9162#0: *18 connect() to unix:/var/run/php5-fpm.sock failed (13: Permission denied) while connecting to upstream
@@ -149,6 +146,12 @@
   action: service name=php5-fpm state=started
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm]
+
+- name: Create FPM php configuration
+  template: src=php.ini.fpm.j2 dest=/etc/php5/fpm/php.ini backup=yes owner=root group=root mode=0644
+  when: ansible_os_family == "Debian" and use_php5_fpm == true
+  notify: restart php5-fpm
+  tags: [configuration,php_fpm]
 
 - name: Configure FPM in Apache
   copy: src=apache-php-fpm.conf dest=/etc/apache2/conf-available/php5-fpm.conf owner=root group=root mode=0644
