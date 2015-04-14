@@ -36,10 +36,18 @@
   - reload Apache
   tags: [apache2]
 
-- name: installing website config {{ PROJECT_NAME }}
-  template: src=site.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf
+- name: installing website config (.htaccess variant) {{ PROJECT_NAME }}
+  template: src=site_htaccess.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf
   notify:
   - reload Apache
+  when: use_htaccess == true
+  tags: [apache2]
+
+- name: installing website config (virtual host variant) {{ PROJECT_NAME }}
+  template: src=site_vhost.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf
+  notify:
+  - reload Apache
+  when: use_htaccess == false
   tags: [apache2]
 
 - name: create a symlink for website {{ PROJECT_NAME }}
