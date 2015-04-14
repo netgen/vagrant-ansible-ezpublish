@@ -11,8 +11,7 @@
 
     <Directory {{ PROJECT_ROOT }}/web/>
         AllowOverride All
-        Order Allow,Deny
-        Allow from all
+        Require all granted
     </Directory>
 
     <Location />
