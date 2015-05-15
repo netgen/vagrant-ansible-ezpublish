@@ -7,6 +7,7 @@ Vagrant box, with Ansible provisioning to setup new eZ Publish project.
 
 - [Srdjan Vranac]
 - [Dinko Korunic]
+- [Edi Modric]
 
 ## Prerequisites
 
@@ -70,3 +71,4 @@ ansible-playbook -i provisioning/inventories/production provisioning/production.
 [VirtualBox]: https://www.virtualbox.org/wiki/Downloads
 [Srdjan Vranac]: https://github.com/vranac
 [Dinko Korunic]: https://github.com/dkorunic
+[Edi Modric]: https://github.com/emodric
