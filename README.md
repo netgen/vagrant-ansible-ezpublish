@@ -3,9 +3,10 @@ vagrant-ansible-ezpublish
 
 Vagrant box, with Ansible provisioning to setup new eZ Publish project.
 
-## Author
+## Authors
 
-[Srdjan Vranac]
+- [Srdjan Vranac]
+- [Dinko Korunic]
 
 ## Prerequisites
 
@@ -68,3 +69,4 @@ ansible-playbook -i provisioning/inventories/production provisioning/production.
 [Ansible]: http://docs.ansible.com/intro_installation.html
 [VirtualBox]: https://www.virtualbox.org/wiki/Downloads
 [Srdjan Vranac]: https://github.com/vranac
+[Dinko Korunic]: https://github.com/dkorunic
