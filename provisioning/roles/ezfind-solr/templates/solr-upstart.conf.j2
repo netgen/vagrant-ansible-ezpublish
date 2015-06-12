@@ -1,5 +1,7 @@
 #! /bin/sh
 #
+# {{ ansible_managed }}
+#
 # eZ Find init script for debian.
 #
 # Usage:
@@ -19,7 +21,7 @@
 
 # Replace with the java directory of your eZ Find extension
 # (example: /var/www/ezpublish/extension/ezfind/java)
-SOLR_HOME={{ PROJECT_ROOT }}/ezpublish_legacy/extension/ezfind/java
+SOLR_HOME={{ SOLR_HOME }}
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Solr indexing server"
