@@ -1,0 +1,4 @@
+---
+# defaults file for ezfind-solr
+
+PROJECT_ROOT: "/var/www"

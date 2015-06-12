@@ -1,0 +1,12 @@
+---
+# tasks file for ezfind-solr
+
+- name: Install the openjdk-7-jdk (APT)
+  apt: name=openjdk-7-jdk state=latest update_cache=yes
+  when: ansible_os_family == "Debian"
+  tags: [ezfind, packages]
+
+- name: Copy the ezfind solar upstart script
+  template: src=solr-upstart.conf.j2 dest=/etc/init/solr.conf backup=yes owner=root group=root mode=0644
+  when: ansible_os_family == "Debian"
+  tags: [ezfind, upstart, configuration]
