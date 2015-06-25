@@ -6,7 +6,11 @@
   when: ansible_os_family == "Debian"
   tags: [ezfind, packages]
 
-- name: Copy the ezfind solar upstart script
-  template: src=solr-upstart.conf.j2 dest=/etc/init/solr.conf backup=yes owner=root group=root mode=0644
+- name: Copy the ezfind solar init.d script
+  template: src=solr-upstart.conf.j2 dest=/etc/init.d/solr backup=yes owner=root group=root mode=0755
   when: ansible_os_family == "Debian"
   tags: [ezfind, upstart, configuration]
+
+- name: Update update-rc.d
+  shell: update-rc.d solr defaults
+  sudo: yes
