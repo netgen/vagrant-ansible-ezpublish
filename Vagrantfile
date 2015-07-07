@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'ffi'
+
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
@@ -39,9 +41,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
+  mount_options = ["noatime,intr,rdirplus"]
+  opts = if FFI::Platform::IS_WINDOWS
+    { :mount_options => mount_options }
+  else
+    { :nfs => mount_options }
+  end
   config.vm.synced_folder "./", "/var/www/ezpublish",
-        mount_options: ["noatime,intr,rdirplus"],
-        type: "nfs"
+    opts
 
   config.vm.boot_timeout = 9000
 
