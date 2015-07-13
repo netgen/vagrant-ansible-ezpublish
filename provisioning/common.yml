@@ -29,5 +29,6 @@
   roles:
     - common
     - { role: apache, use_htaccess: false }
+    - ezfind-solr
 
   tasks:
