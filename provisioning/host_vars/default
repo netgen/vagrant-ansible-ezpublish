@@ -9,3 +9,7 @@ HOST: "vagrant.local"
 USERNAME: "ez"
 PASSWORD: "ez"
 DB_NAME: "ezpublish"
+
+# We use eZ Publish specific VCL
+
+VARNISH_USE_DEFAULT_VCL: false
