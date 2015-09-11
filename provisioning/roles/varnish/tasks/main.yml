@@ -30,6 +30,3 @@
 - name: Copy varnish secret.
   template: src=secret.j2 dest={{ VARNISH_CONFIG_PATH }}/secret owner=root group=root mode=0644
   notify: restart varnish
-
-# - name: Ensure Varnish is started and set to run on startup.
-#   service: name=varnish state=started enabled=yes
