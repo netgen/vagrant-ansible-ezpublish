@@ -22,6 +22,10 @@ module OS
     end
 end
 
+unless Vagrant.has_plugin?("vagrant-nfs_guest")
+  raise "!*! Plugin required !*!\n\n\tvagrant plugin install vagrant-nfs_guest\n"
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
