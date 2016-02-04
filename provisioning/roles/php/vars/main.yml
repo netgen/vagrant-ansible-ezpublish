@@ -1,9 +1,6 @@
 ---
 # vars file for php
 
-env:
- RUNLEVEL: 1
-
 php_packages:
   - php5-dev
   - php5-cli

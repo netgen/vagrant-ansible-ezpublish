@@ -1,9 +1,6 @@
 ---
 # vars file for common
 
-env:
- RUNLEVEL: 1
-
 common_packages:
   - gcc
   - curl
