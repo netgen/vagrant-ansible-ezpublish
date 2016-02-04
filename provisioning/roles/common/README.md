@@ -23,7 +23,7 @@ Example Playbook
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - common
 ```
@@ -31,7 +31,7 @@ Or using parameters:
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - { common: PROJECT_TIMEZONE: 'America/New_York'}
     - common:

@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   # You should remember this from my puppet rants
   # Execute the apt-get update only if it was last executed more than 12 hours ago
   pre_tasks:

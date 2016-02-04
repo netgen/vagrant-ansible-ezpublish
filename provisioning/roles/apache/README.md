@@ -35,7 +35,7 @@ Example Playbook
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - apache
 ```
@@ -43,7 +43,7 @@ Or using parameters:
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - { role: apache, name: symfony, use_htaccess: false }
 ```

@@ -2,8 +2,8 @@
 # handlers file for apache
 - name: restart Apache
   service: name=apache2 state=restarted
-  sudo: yes
+  become: yes
 
 - name: reload Apache
   service: name=apache2 state=reloaded
-  sudo: yes
+  become: yes

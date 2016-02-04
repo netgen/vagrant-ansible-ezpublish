@@ -3,7 +3,7 @@
 
 # This is a setup for vagrant host, inherits from all
 - hosts: default
-  sudo: yes
+  become: yes
   roles:
     - kernel
     - nodejs
@@ -16,7 +16,7 @@
   tasks:
     - name: restart Apache
       service: name=apache2 state=restarted
-      sudo: yes
+      become: yes
     - name: restart Varnish
       service: name=varnish state=restarted
-      sudo: yes
+      become: yes

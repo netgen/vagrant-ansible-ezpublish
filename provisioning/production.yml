@@ -3,7 +3,7 @@
 
 # This is a setup for production hosts, inherits from all
 - hosts: default
-  sudo: yes
+  become: yes
   roles:
     # - { role: php, use_php56: true, use_xdebug: false }
     # - { role: mysql, use_mysql56: true}

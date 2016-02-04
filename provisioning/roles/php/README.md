@@ -26,7 +26,7 @@ Example Playbook
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - { role: php, use_php56: true, use_xdebug: true, activate_xdebug: true }
 ```
