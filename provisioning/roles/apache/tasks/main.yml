@@ -6,6 +6,21 @@
   when: ansible_os_family == "Debian"
   tags: [apache2, packages]
 
+- name: Apache should run under vagrant user
+  lineinfile: dest=/etc/apache2/envvars regexp="^export APACHE_RUN_USER=www-data" line="export APACHE_RUN_USER=vagrant"
+
+- name: Apache should run under vagrant group
+  lineinfile: dest=/etc/apache2/envvars regexp="^export APACHE_RUN_GROUP=www-data" line="export APACHE_RUN_GROUP=vagrant"
+
+- name: Own the apache logs
+  file: state=directory group=vagrant owner=vagrant recurse=yes path=/var/log/apache2
+
+- name: Own the apache lock
+  file: state=directory group=vagrant owner=vagrant recurse=yes path=/var/lock/apache2
+
+- name: Own the apache fastcgi
+  file: state=directory group=vagrant owner=vagrant recurse=yes path=/var/lib/apache2/fastcgi
+
 - name: enable Apache2 modules
   apache2_module: state=present name={{ item }}
   with_items: common_modules
