@@ -18,7 +18,7 @@
   tags: [nodejs, packages]
 
 - name: install uglifiers
-  npm: name={{ item }} global=yes state=latest
+  command: npm install -g {{ item }}
   with_items:
     - uglify-js
     - uglifycss
