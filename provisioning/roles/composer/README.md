@@ -23,7 +23,7 @@ Example Playbook
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - { role: composer, use_composer_no_dev: no }
 ```

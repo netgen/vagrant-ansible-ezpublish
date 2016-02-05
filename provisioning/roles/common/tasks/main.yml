@@ -6,7 +6,6 @@
 - name: Install the common tools (APT)
   apt: name={{ item }} state=present update_cache=yes
   with_items: common_packages
-  environment: env
   when: ansible_os_family == "Debian"
   tags: [packages]
 

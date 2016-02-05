@@ -11,14 +11,12 @@
 - name: Remove the existing mysql libraries
   apt: name={{ item }} state=absent update_cache=yes
   with_items: mysql_packages
-  environment: env
   when: ansible_os_family == "Debian" and use_mysql56 == true and not mysql_version_result|failed == false
   tags: [mysql, mysql56, packages]
 
 - name: Add mysql 5.6 repository if needed
   # Add specified repository into sources list.
   apt_repository: repo='ppa:ondrej/mysql-5.6' state=present
-  environment: env
   when: ansible_os_family == "Debian" and use_mysql56 == true and mysql_version_result|failed
   tags: [mysql, mysql56, packages]
 
@@ -30,7 +28,6 @@
 - name: Install the packages
   apt: name={{ item }} state=present update_cache=yes
   with_items: mysql_packages
-  environment: env
   when: ansible_os_family == "Debian"
   tags: [mysql,packages]
 

@@ -6,7 +6,6 @@
 - name: Install the mailcatcher prerequisites (APT)
   apt: name={{ item }} state=latest update_cache=yes
   with_items: mailcatcher_packages
-  environment: env
   when: ansible_os_family == "Debian"
   tags: [mailcatcher, packages]
 

@@ -27,7 +27,7 @@ Example Playbook
 ```
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - { role: nginx, name: symfony }
 ```

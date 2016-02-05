@@ -2,4 +2,4 @@
 # handlers file for kernel
 - name: restart procps
   service: name=procps state=restarted
-  sudo: yes
+  become: yes

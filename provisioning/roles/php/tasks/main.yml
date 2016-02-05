@@ -21,21 +21,18 @@
 - name: Remove dotdeb if installing php 5.6 (dotdeb)
   # Remove specified repository from sources list.
   apt_repository: repo='deb http://packages.dotdeb.org wheezy-php55 all' state=absent update_cache=yes
-  environment: env
   when: ansible_os_family == "Debian" and ansible_distribution_version|float >= 12.10 and use_php56 == true
   tags: [php, php56, packages]
 
 - name: Add php 5.6 repository if needed for quantal and newer (ondrej)
   # Add specified repository into sources list.
   apt_repository: repo='ppa:ondrej/php5-5.6/ubuntu trusty main' state=present update_cache=yes
-  environment: env
   when: ansible_os_family == "Debian" and ansible_distribution_version|float >= 12.10 and use_php56 == true
   tags: [php, php56, packages]
 
 - name: Install the php libraries (APT)
   apt: name={{ item }} state=latest update_cache=yes
   with_items: php_packages
-  environment: env
   when: ansible_os_family == "Debian" and php_packages|lower != 'none'
   tags: [php, packages]
 
@@ -63,7 +60,6 @@
   apt: name={{ item }} state=present update_cache=yes
   # located in vars/main.yml
   with_items: php_xdebug
-  environment: env
   when: ansible_os_family == "Debian" and use_xdebug == true
   tags: [php, packages, xdebug, dev]
 
@@ -84,7 +80,6 @@
   apt: name={{ item }} state=present update_cache=yes
   # located in vars/main.yml
   with_items: php_fpm_packages
-  environment: env
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm, packages]
 
@@ -92,7 +87,6 @@
   apt: name={{ item }} state=absent update_cache=yes
   # located in vars/main.yml
   with_items: php_fpm_packages
-  environment: env
   when: ansible_os_family == "Debian" and use_php5_fpm == false
   tags: [php, php_fpm, packages]
 
@@ -100,7 +94,6 @@
   apt: name={{ item }} state=present update_cache=yes
   # located in vars/main.yml
   with_items: php_nofpm_packages
-  environment: env
   when: ansible_os_family == "Debian" and use_php5_fpm == false
   tags: [php, packages]
 
@@ -108,7 +101,6 @@
   apt: name={{ item }} state=absent update_cache=yes
   # located in vars/main.yml
   with_items: php_nofpm_packages
-  environment: env
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, packages]
 

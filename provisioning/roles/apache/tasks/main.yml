@@ -3,7 +3,6 @@
 - name: Install Apache packages
   apt: name={{ item }} state=present update_cache=yes
   with_items: apache_packages
-  environment: env
   when: ansible_os_family == "Debian"
   tags: [apache2, packages]
 
