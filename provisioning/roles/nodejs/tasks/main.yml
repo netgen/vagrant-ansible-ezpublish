@@ -7,8 +7,8 @@
   # Add specified repository into sources list.
   apt_repository: repo='{{ item }} trusty main' state=present update_cache=yes
   with_items:
-    - deb https://deb.nodesource.com/node
-    - deb-src https://deb.nodesource.com/node
+    - deb https://deb.nodesource.com/node_4.x
+    - deb-src https://deb.nodesource.com/node_4.x
   when: ansible_os_family == "Debian"
   tags: [nodejs, packages]
 
@@ -18,7 +18,7 @@
   tags: [nodejs, packages]
 
 - name: install uglifiers
-  npm: name={{ item }} global=yes state=latest
+  command: npm install -g {{ item }}
   with_items:
     - uglify-js
     - uglifycss
