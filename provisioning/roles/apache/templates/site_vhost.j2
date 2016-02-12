@@ -26,6 +26,7 @@
     # "web" folder is what we expose to the world, all rewrite rules further down is relative to it.
     <Directory {{ PROJECT_ROOT }}/web>
         # If using php configured in FastCGI mode, you might also need to add "ExecCGI" to the line below
+        Options FollowSymLinks
         AllowOverride None
         Require all granted
     </Directory>
@@ -73,8 +74,6 @@
         # For FastCGI mode or when using PHP-FPM, to get basic auth working.
         RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-        # Needed for ci testing, you can optionally remove this.
-        RewriteCond %{ENV:SYMFONY_ENV} "behat"
         RewriteCond %{REQUEST_URI} ^/php5-fcgi(.*)
         RewriteRule . - [L]
 
