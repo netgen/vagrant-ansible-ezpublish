@@ -1,0 +1,15 @@
+---
+# project root in the default host (in this case Vagrant box)
+PROJECT_ROOT: "/var/www/ezpublish"
+PROJECT_NAME: "ezpublish"
+
+HOST: "vagrant.local"
+
+# defaults file for mysql
+USERNAME: "ez"
+PASSWORD: "ez"
+DB_NAME: "ezpublish"
+
+# We use eZ Publish specific VCL
+
+VARNISH_USE_DEFAULT_VCL: false
