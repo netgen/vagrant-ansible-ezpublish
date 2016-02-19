@@ -20,6 +20,14 @@ You need to have following installed:
 - [Ansible]
 - [VirtualBox]
 
+If you are running windows, or have an ssd, copy `Vagrantfile-win-nfs` to `Vagrantfile`.
+
+If you are on a **non-windows** platform, **without SSD**, copy `Vagrantfile-reverse-nfs` to `Vagrantfile`.
+
+***DO NOT COMMIT THE `Vagrantfile`***.
+
+Notice that **V** in `Vagrantfile` is **case sensitive**.
+
 ## Local development setup
 
 The local development is meant to be used in a vagrant provisioned box.

@@ -25,6 +25,8 @@
     - name: install python-pycurl
       apt: pkg=python-pycurl state=latest
       when: ansible_os_family == "Debian"
+    - name: create project root
+      file: path={{PROJECT_ROOT}} state=directory owner=vagrant group=vagrant
 
   roles:
     - common
