@@ -22,9 +22,11 @@ You need to have following installed:
 
 If you are running windows, or have an ssd, copy `Vagrantfile-win-nfs` to `Vagrantfile`.
 
-If you are on a NON-WINDOWS platform, WITHOUT SSD, copy `Vagrantfile-reverse-nfs` to `Vagrantfile`.
+If you are on a **non-windows** platform, **without SSD**, copy `Vagrantfile-reverse-nfs` to `Vagrantfile`.
 
-DO NOT COMMIT THE `Vagrantfile`.
+***DO NOT COMMIT THE `Vagrantfile`***.
+
+Notice that **V** in `Vagrantfile` is **case sensitive**.
 
 ## Local development setup
 
