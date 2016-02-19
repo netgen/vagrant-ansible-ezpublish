@@ -11,18 +11,14 @@ Vagrant box, with Ansible provisioning to setup new eZ Publish project.
 
 ## Prerequisites
 
-You need to be using either OSX or linux as your OS.
-
-If you are using Windows, let me know so I can take a look how to setup the ansible-pull (and if it is possible)
-
 You need to have following installed:
 - [Vagrant]
 - [Ansible]
 - [VirtualBox]
 
-If you are running windows, or have an ssd, copy `Vagrantfile-win-nfs` to `Vagrantfile`.
+If you are running **Windows** (with or without SSD), or **Linux/Mac OS X with SSD** , copy or symlink `Vagrantfile-nfs` to `Vagrantfile`.
 
-If you are on a **non-windows** platform, **without SSD**, copy `Vagrantfile-reverse-nfs` to `Vagrantfile`.
+If you are running **Linux/Mac OS X without SSD**, copy `Vagrantfile-reverse-nfs` to `Vagrantfile`.
 
 ***DO NOT COMMIT THE `Vagrantfile`***.
 
