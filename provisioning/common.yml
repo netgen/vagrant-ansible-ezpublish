@@ -27,6 +27,8 @@
       when: ansible_os_family == "Debian"
     - name: create project root
       file: path={{PROJECT_ROOT}} state=directory owner=vagrant group=vagrant
+    - name: Set default folder to /var/www/ezpublish
+      lineinfile: dest=/home/vagrant/.bashrc state=present insertafter=EOF line="cd /var/www/ezpublish"
 
   roles:
     - common
