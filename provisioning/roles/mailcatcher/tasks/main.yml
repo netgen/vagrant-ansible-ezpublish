@@ -11,7 +11,7 @@
   tags: [mailcatcher, packages]
 
 - name: Install the mailcatcher prerequisites (APT)
-  apt: name={{ item }} state=latest update_cache=yes
+  apt: name="{{ item }}" state=latest update_cache=yes
   with_items: mailcatcher_packages
   when: ansible_os_family == "Debian"
   tags: [mailcatcher, packages]
@@ -27,7 +27,7 @@
 
 - name: Setup the upstart script
   template: src=mailcatcher.j2
-            dest={{ upstart_init_path }}/mailcatcher.conf
+            dest="{{ upstart_init_path }}/mailcatcher.conf"
             backup=yes
             owner=root
             group=root

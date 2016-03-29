@@ -9,7 +9,7 @@
   tags: [mysql, mysql56, packages]
 
 - name: Remove the existing mysql libraries
-  apt: name={{ item }} state=absent update_cache=yes
+  apt: name="{{ item }}" state=absent update_cache=yes
   with_items: mysql_packages
   when: ansible_os_family == "Debian" and use_mysql56 == true and not mysql_version_result|failed == false
   tags: [mysql, mysql56, packages]
@@ -26,7 +26,7 @@
   tags: [mysql, mysql56, packages]
 
 - name: Install the packages
-  apt: name={{ item }} state=present update_cache=yes
+  apt: name="{{ item }}" state=present update_cache=yes
   with_items: mysql_packages
   when: ansible_os_family == "Debian"
   tags: [mysql,packages]
@@ -48,9 +48,9 @@
   tags: [mysql]
 
 - name: Create the dev database
-  mysql_db: name={{ DB_NAME }} state=present encoding=utf8 collation=utf8_general_ci
+  mysql_db: name="{{ DB_NAME }}" state=present encoding=utf8 collation=utf8_general_ci
   tags: [mysql]
 
 - name: Create the dev user for the mysql
-  mysql_user: name={{ USERNAME }} password={{ PASSWORD }} priv={{ DB_NAME }}.*:ALL,GRANT state=present
+  mysql_user: name="{{ USERNAME }}" password="{{ PASSWORD }}" priv="{{ DB_NAME }}.*:ALL,GRANT" state=present
   tags: [mysql]

@@ -20,18 +20,18 @@
   become: yes
 
 - name: Ensure Varnish config path exists.
-  file: path={{ VARNISH_CONFIG_PATH }} state=directory
+  file: path="{{ VARNISH_CONFIG_PATH }}" state=directory
 
 - name: Copy Varnish default VCL.
-  template: src=default_vcl.j2 dest={{ VARNISH_CONFIG_PATH }}/default.vcl owner=root group=root mode=0644
+  template: src=default_vcl.j2 dest="{{ VARNISH_CONFIG_PATH }}/default.vcl" owner=root group=root mode=0644
   when: VARNISH_USE_DEFAULT_VCL == true
   notify: restart varnish
 
 - name: Copy eZ Publish Varnish VCL.
-  template: src=ezpublish_vcl.j2 dest={{ VARNISH_CONFIG_PATH }}/default.vcl owner=root group=root mode=0644
+  template: src=ezpublish_vcl.j2 dest="{{ VARNISH_CONFIG_PATH }}/default.vcl" owner=root group=root mode=0644
   when: VARNISH_USE_DEFAULT_VCL == false
   notify: restart varnish
 
 - name: Copy varnish secret.
-  template: src=secret.j2 dest={{ VARNISH_CONFIG_PATH }}/secret owner=root group=root mode=0644
+  template: src=secret.j2 dest="{{ VARNISH_CONFIG_PATH }}/secret" owner=root group=root mode=0644
   notify: restart varnish
