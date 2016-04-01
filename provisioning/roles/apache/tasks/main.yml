@@ -1,7 +1,7 @@
 ---
 
 - name: Install Apache packages
-  apt: name={{ item }} state=present update_cache=yes
+  apt: name="{{ item }}" state=present update_cache=yes
   with_items: apache_packages
   when: ansible_os_family == "Debian"
   tags: [apache2, packages]
@@ -22,7 +22,7 @@
   file: state=directory group=vagrant owner=vagrant recurse=yes path=/var/lib/apache2/fastcgi
 
 - name: enable Apache2 modules
-  apache2_module: state=present name={{ item }}
+  apache2_module: state=present name="{{ item }}"
   with_items: common_modules
   notify: restart Apache
   when: ansible_os_family == "Debian"
@@ -45,27 +45,27 @@
   tags: [apache2]
 
 - name: make sure that there is no default website
-  file: path={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/000-default.conf state=absent
+  file: path="{{ APACHE_SITES_ENABLED_CONFIG_PATH }}/000-default.conf" state=absent
   notify:
   - reload Apache
   tags: [apache2]
 
-- name: installing website config (.htaccess variant) {{ PROJECT_NAME }}
-  template: src=site_htaccess.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf
+- name: "installing website config (.htaccess variant) {{ PROJECT_NAME }}"
+  template: src=site_htaccess.j2 dest="{{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf"
   notify:
   - reload Apache
   when: use_htaccess == true
   tags: [apache2]
 
-- name: installing website config (virtual host variant) {{ PROJECT_NAME }}
-  template: src=site_vhost.j2 dest={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf
+- name: "installing website config (virtual host variant) {{ PROJECT_NAME }}"
+  template: src=site_vhost.j2 dest="{{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf"
   notify:
   - reload Apache
   when: use_htaccess == false
   tags: [apache2]
 
-- name: create a symlink for website {{ PROJECT_NAME }}
-  file: src={{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf dest={{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf state=link
+- name: "create a symlink for website {{ PROJECT_NAME }}"
+  file: src="{{ APACHE_SITES_AVAILABLE_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf" dest="{{ APACHE_SITES_ENABLED_CONFIG_PATH }}/{{ PROJECT_NAME }}.conf" state=link
   # also a handler named restart APACHE is present if needed
   notify:
   - reload Apache
