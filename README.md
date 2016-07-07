@@ -60,6 +60,10 @@ If vagrant starts complaining about locale and crashes the provisioning, in
 SendEnv LANG LC_*
 ```
 
+## Access via web browser
+
+You can access whatever site you installed inside the box with the following URL in your browser: `http://172.21.12.10`
+
 ## Windows Support
 
 Shell script will run from within the vm to provision the setup
