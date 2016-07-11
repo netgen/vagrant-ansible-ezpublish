@@ -60,6 +60,10 @@ If vagrant starts complaining about locale and crashes the provisioning, in
 SendEnv LANG LC_*
 ```
 
+## Installing eZ Platform
+
+Read the [step by step guide](EZPLATFORM_INSTALL.md) on how to install eZ Platform inside the box:
+
 ## Access via web browser
 
 You can access whatever site you installed inside the box with the following URL in your browser: `http://172.21.12.10`
