@@ -1,0 +1,2 @@
+[summercamp]
+summercamp	ansible_connection=local
