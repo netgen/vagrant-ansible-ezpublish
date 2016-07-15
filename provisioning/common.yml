@@ -26,14 +26,15 @@
       apt: pkg=python-pycurl state=latest
       when: ansible_os_family == "Debian"
     - name: create project root
-      file: path={{PROJECT_ROOT}} state=directory owner=vagrant group=vagrant
+      file: path={{PROJECT_ROOT}} state=directory owner={{ SYSTEM_USER }} group={{ SYSTEM_USER }}
       ignore_errors: True
     - name: Set default folder to /var/www/ezpublish
-      lineinfile: dest=/home/vagrant/.bashrc state=present insertafter=EOF line="cd /var/www/ezpublish"
+      lineinfile: dest=/home/{{ SYSTEM_USER }}/.bashrc state=present insertafter=EOF line="cd /var/www/ezpublish"
+      ignore_errors: True
 
   roles:
     - common
     - { role: apache, use_htaccess: false }
-    - ezfind-solr
+#    - ezfind-solr
 
   tasks:
