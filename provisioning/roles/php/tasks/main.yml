@@ -32,7 +32,7 @@
 
 - name: Install the php libraries (APT)
   apt: name="{{ item }}" state=latest update_cache=yes
-  with_items: php_packages
+  with_items: "{{ php_packages }}"
   when: ansible_os_family == "Debian" and php_packages|lower != 'none'
   tags: [php, packages]
 
@@ -59,7 +59,7 @@
 - name: Install xdebug
   apt: name="{{ item }}" state=present update_cache=yes
   # located in vars/main.yml
-  with_items: php_xdebug
+  with_items: "{{ php_xdebug }}"
   when: ansible_os_family == "Debian" and use_xdebug == true
   tags: [php, packages, xdebug, dev]
 
@@ -79,28 +79,28 @@
 - name: Install the php-fpm specific libraries (APT)
   apt: name="{{ item }}" state=present update_cache=yes
   # located in vars/main.yml
-  with_items: php_fpm_packages
+  with_items: "{{ php_fpm_packages }}"
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm, packages]
 
 - name: Remove the php-fpm specific libraries (APT)
   apt: name="{{ item }}" state=absent update_cache=yes
   # located in vars/main.yml
-  with_items: php_fpm_packages
+  with_items: "{{ php_fpm_packages }}"
   when: ansible_os_family == "Debian" and use_php5_fpm == false
   tags: [php, php_fpm, packages]
 
 - name: Install the php non-fpm specific libraries (APT)
   apt: name="{{ item }}" state=present update_cache=yes
   # located in vars/main.yml
-  with_items: php_nofpm_packages
+  with_items: "{{ php_nofpm_packages }}"
   when: ansible_os_family == "Debian" and use_php5_fpm == false
   tags: [php, packages]
 
 - name: Remove the php non-fpm specific libraries (APT)
   apt: name="{{ item }}" state=absent update_cache=yes
   # located in vars/main.yml
-  with_items: php_nofpm_packages
+  with_items: "{{ php_nofpm_packages }}"
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, packages]
 
@@ -159,14 +159,14 @@
 - name: Disable non-used MPM in Apache (FPM related)
   apache2_module: state=absent name="{{ item }}"
   ignore_errors: True
-  with_items: apache_nonfpm_mpm
+  with_items: "{{ apache_nonfpm_mpm }}"
   notify: restart Apache
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm]
 
 - name: Enable required MPM in Apache (FPM related)
   apache2_module: state=present name="{{ item }}"
-  with_items: apache_fpm_mpm
+  with_items: "{{ apache_fpm_mpm }}"
   notify: restart Apache
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm]
