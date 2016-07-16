@@ -4,16 +4,16 @@
   # You should remember this from my puppet rants
   # Execute the apt-get update only if it was last executed more than 12 hours ago
   pre_tasks:
-    - name: enable multiverse repo and multiverse security updates
-      apt_repository: repo="{{item}}" update_cache=no
-      when: ansible_os_family == "Debian"
-      with_items:
-        - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse'
-        - 'deb-src http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse'
-        - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse'
-        - 'deb-src http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse'
-        - 'deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse'
-        - 'deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse'
+#    - name: enable multiverse repo and multiverse security updates
+#      apt_repository: repo="{{item}}" update_cache=no
+#      when: ansible_os_family == "Debian"
+#      with_items:
+#        - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse'
+#        - 'deb-src http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse'
+#        - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse'
+#        - 'deb-src http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse'
+#        - 'deb http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse'
+#        - 'deb-src http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security multiverse'
     - name: check apt last update
       stat: path=/var/cache/apt
       register: apt_cache_stat
