@@ -24,7 +24,7 @@ php_nofpm_packages:
 
 php_fpm_packages:
   - php5-fpm
-  - apache2-mpm-event
+#  - apache2-mpm-event
 
 apache_fpm_mpm:
   - mpm_event
