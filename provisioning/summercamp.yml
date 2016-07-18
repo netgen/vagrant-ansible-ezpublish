@@ -4,7 +4,6 @@
 # This is a setup for vagrant host, inherits from all
 - hosts: summercamp
   become: yes
-  become_method: sudo
 
   roles:
     - kernel
