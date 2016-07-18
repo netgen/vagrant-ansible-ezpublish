@@ -33,6 +33,7 @@
 - name: Install the php libraries (APT)
   apt: name="{{ item }}" state=latest update_cache=yes
   with_items: "{{ php_packages }}"
+  ignore_errors: True
   when: ansible_os_family == "Debian" and php_packages|lower != 'none'
   tags: [php, packages]
 #
