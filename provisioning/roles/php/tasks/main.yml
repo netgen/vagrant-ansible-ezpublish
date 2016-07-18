@@ -123,7 +123,7 @@
             group=root
             mode=0644
   # located in defaults/main.yml
-  with_items: php_fpm_www_additional
+  with_items: "{{ php_fpm_www_additional }}"
   when: php_fpm_www_additional|lower != 'none' and use_php5_fpm == true
   notify:
    - restart php5-fpm
