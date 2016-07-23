@@ -72,6 +72,28 @@ You can access whatever site you installed inside the box with the following URL
 
 Shell script will run from within the vm to provision the setup
 
+## Troubleshooting
+
+If at the start of provisioning you receive an error such as this:
+```
+The provider 'virtualbox' that was requested to back the machine
+'default' is reporting that it isn't usable on this system. The
+reason is shown below:
+
+Vagrant has detected that you have a version of VirtualBox installed
+that is not supported by this version of Vagrant. Please install one of
+the supported versions listed below to use Vagrant:
+
+4.0, 4.1, 4.2, 4.3, 5.0
+
+A Vagrant update may also be available that adds support for the version
+you specified. Please check www.vagrantup.com/downloads.html to download
+the latest version.
+```
+
+You are most likely using VirtualBox 5.1.x, and you are using Vagrant version
+older than 1.8.5, please update to resolve.
+
 ## Deploying to remote servers
 
 ```
