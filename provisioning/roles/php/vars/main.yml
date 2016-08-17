@@ -1,30 +1,50 @@
 ---
 # vars file for php
 
-php_packages:
-  - php5-dev
-  - php5-cli
-  - php5-mysql
-  - php5-pgsql
+php56_packages:
+  - php5.6
+  - php5.6-dev
+  - php5.6-cli
+  - php5.6-mysql
+  - php5.6-pgsql
   - php-pear
-  - php5-mcrypt
-  - php5-curl
-  - php5-gd
-  - php5-intl
-  - php5-xsl
+  - php5.6-mcrypt
+  - php5.6-curl
+  - php5.6-gd
+  - php5.6-intl
+  - php5.6-xsl
   - imagemagick
-  - php5-imagick
-  - php5-gd
+  - php5.6-imagick
+
+php7_packages:
+  - php7.0
+  - php7.0-dev
+  - php7.0-cli
+  - php7.0-mysql
+  - php7.0-pgsql
+  - php-pear
+  - php7.0-mcrypt
+  - php7.0-curl
+  - php7.0-gd
+  - php7.0-intl
+  - php7.0-xml
+  - imagemagick
+  - php7.0-imagick
 
 php_xdebug:
-  - php5-xdebug
+  - php5.6-xdebug
 
-php_nofpm_packages:
-  - libapache2-mod-php5
+php56_nofpm_packages:
+  - libapache2-mod-php5.6
 
-php_fpm_packages:
-  - php5-fpm
-#  - apache2-mpm-event
+php7_nofpm_packages:
+  - libapache2-mod-php7.0
+
+php56_fpm_packages:
+  - php5.6-fpm
+
+php7_fpm_packages:
+  - php7.0-fpm
 
 apache_fpm_mpm:
   - mpm_event
