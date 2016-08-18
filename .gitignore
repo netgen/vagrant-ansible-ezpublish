@@ -1,5 +1,5 @@
 .idea/
 .vagrant/
-ezpublish/
+www/
 .DS_Store
 Vagrantfile
