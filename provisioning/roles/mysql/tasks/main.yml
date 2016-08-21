@@ -52,5 +52,5 @@
   tags: [mysql]
 
 - name: Create the dev user for the mysql
-  mysql_user: name="{{ USERNAME }}" password="{{ PASSWORD }}" priv="{{ DB_NAME }}.*:ALL,GRANT" state=present
+  mysql_user: name="{{ USERNAME }}" password="{{ PASSWORD }}" priv="*.*:ALL,GRANT" state=present
   tags: [mysql]
