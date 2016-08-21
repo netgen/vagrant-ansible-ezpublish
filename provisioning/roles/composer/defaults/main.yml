@@ -1,7 +1,7 @@
 ---
 # defaults file for composer
 
-PROJECT_ROOT: "/www"
+PROJECT_ROOT: "/var/www"
 
 use_composer_no_dev: no
 install_vendors: true

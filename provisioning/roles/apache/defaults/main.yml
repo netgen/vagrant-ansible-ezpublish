@@ -1,6 +1,6 @@
 ---
 # defaults file for apache
-PROJECT_ROOT: "/www"
+PROJECT_ROOT: "/var/www"
 PROJECT_NAME: "web"
 
 APACHE_SITES_ENABLED_CONFIG_PATH: "/etc/apache2/sites-enabled"

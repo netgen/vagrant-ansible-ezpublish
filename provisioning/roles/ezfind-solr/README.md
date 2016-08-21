@@ -4,7 +4,7 @@ EzFind Solr
 Copy the solr upstart script for ezfind sold
 
 Defaults that should be set as group/host variables:
-PROJECT_ROOT: "/www"
+PROJECT_ROOT: "/var/www"
 
 
 Example Playbook

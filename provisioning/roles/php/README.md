@@ -7,7 +7,7 @@ Role Variables
 --------------
 
 Defaults that should be set as group/host variables:
-PROJECT_ROOT: "/www"
+PROJECT_ROOT: "/var/www"
 
 Variables:
 - use_php56 - should PHP 5.6 be installed, default is false
