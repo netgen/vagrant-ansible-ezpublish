@@ -7,7 +7,7 @@ Role Variables
 --------------
 
 Defaults that should be set as group/host variables:
-PROJECT_ROOT: "/var/www"
+PROJECT_ROOT: "/www"
 
 Variables:
 - use_composer_no_dev - should dev section in composer.json be used, default no

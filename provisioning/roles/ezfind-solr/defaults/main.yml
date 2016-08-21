@@ -1,5 +1,5 @@
 ---
 # defaults file for ezfind-solr
 
-PROJECT_ROOT: /var/www
+PROJECT_ROOT: /www
 SOLR_HOME: "{{ PROJECT_ROOT }}/ezpublish_legacy/extension/ezfind/java"

@@ -1,6 +1,6 @@
 ---
 # defaults file for php
-PROJECT_ROOT: "/var/www"
+PROJECT_ROOT: "/www"
 
 use_php56: false
 
