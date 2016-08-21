@@ -15,6 +15,7 @@ php56_packages:
   - php5.6-xsl
   - imagemagick
   - php5.6-imagick
+  - php5.6-mbstring
 
 php7_packages:
   - php7.0
@@ -30,6 +31,7 @@ php7_packages:
   - php7.0-xml
   - imagemagick
   - php7.0-imagick
+  - php7.0-mbstring
 
 php_xdebug:
   - php5.6-xdebug
