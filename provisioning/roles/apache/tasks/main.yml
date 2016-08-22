@@ -12,6 +12,9 @@
 - name: Apache should run under {{ SYSTEM_USER }} group
   lineinfile: dest=/etc/apache2/envvars regexp="^export APACHE_RUN_GROUP=www-data" line="export APACHE_RUN_GROUP={{ SYSTEM_USER }}"
 
+- name: Own the apache www
+  file: state=directory group={{ SYSTEM_USER }} owner={{ SYSTEM_USER }} recurse=yes path=/var/www
+
 - name: Own the apache logs
   file: state=directory group={{ SYSTEM_USER }} owner={{ SYSTEM_USER }} recurse=yes path=/var/log/apache2
 
