@@ -9,8 +9,8 @@
   apt_key: url=https://www.rabbitmq.com/rabbitmq-release-signing-key.asc state=present
 
 - name: Install the RabbitMQ packages
-  apt: name={{ item }} state=present update_cache=yes
-  with_items: rabbitmq_packages
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items: "{{ rabbitmq_packages }}"
   when: ansible_os_family == "Debian"
   tags: [packages, rabbitmq]
 
