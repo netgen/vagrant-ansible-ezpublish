@@ -1,0 +1,41 @@
+---
+# tasks file for rabbitmq
+- name: Add the RabbitMQ repository
+  apt_repository: repo='deb http://www.rabbitmq.com/debian/ testing main' state=present update_cache=yes
+  when: ansible_os_family == "Debian"
+  tags: [packages, rabbitmq]
+
+- name: Add the RabbitMQ apt key
+  apt_key: url=https://www.rabbitmq.com/rabbitmq-release-signing-key.asc state=present
+
+- name: Install the RabbitMQ packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: rabbitmq_packages
+  when: ansible_os_family == "Debian"
+  tags: [packages, rabbitmq]
+
+- name: Enable RabbitMQ management plugin
+  rabbitmq_plugin: names=rabbitmq_management state=enabled
+  when: ansible_os_family == "Debian"
+  tags: [packages, rabbitmq]
+
+- name: Add the new admin to RabbitMQ management
+  rabbitmq_user: user=admin
+                 password=admin
+                 vhost=/
+                 configure_priv=.*
+                 read_priv=.*
+                 write_priv=.*
+                 tags=administrator
+                 state=present
+  notify: restart RabbitMQ server
+
+- name: Add the new worker to RabbitMQ management
+  rabbitmq_user: user=worker
+                 password=worker
+                 vhost=/
+                 configure_priv=.*
+                 read_priv=.*
+                 write_priv=.*
+                 state=present
+  notify: restart RabbitMQ server
