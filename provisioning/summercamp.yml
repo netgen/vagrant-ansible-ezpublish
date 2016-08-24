@@ -14,6 +14,7 @@
     - { role: composer, use_composer_no_dev: no, install_vendors: false }
 #    - { role: mailcatcher }
     - rabbitmq
+    - docker
 
   tasks:
     - name: restart Apache
