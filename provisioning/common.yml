@@ -38,3 +38,6 @@
 #    - ezfind-solr
 
   tasks:
+    # Install pip via easyinstall
+    - name: Install pip with easy_install
+      easy_install: name=pip
