@@ -1,0 +1,40 @@
+---
+# tasks file for docker
+- name: Install the Docker prerequisite packages
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items: "{{ docker_prerequisites }}"
+  when: ansible_os_family == "Debian"
+  tags: [packages, docker]
+
+- name: Add the Docker apt key
+  apt_key: id=F76221572C52609D url=https://apt.dockerproject.org/gpg state=present
+
+- name: Add the Docker repository
+  apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main" state=present update_cache=yes
+  when: ansible_os_family == "Debian"
+  tags: [packages, docker]
+
+- name: Install the Docker packages
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items: "{{ docker_packages }}"
+  when: ansible_os_family == "Debian"
+  notify: restart docker server
+  tags: [packages, docker]
+
+- name: Install the Docker tools
+  pip: name="{{ item }}"
+  with_items: "{{ docker_tools }}"
+  when: ansible_os_family == "Debian"
+  notify: restart docker server
+  tags: [packages, docker]
+
+- name: Create Docker group
+  group: name=docker state=present
+
+ # ATTENTION: this task can potentially create new users!
+- name: Add system user to the docker group ("{{ SYSTEM_USER }}")
+  user:
+    name: "{{ SYSTEM_USER }}"
+    groups: docker
+    append: yes
+  tags: [packages, docker]

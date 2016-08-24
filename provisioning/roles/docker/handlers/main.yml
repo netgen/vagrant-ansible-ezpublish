@@ -1,0 +1,5 @@
+---
+# handlers file for docker
+- name: restart docker server
+  service: name=docker state=restarted
+  become: yes

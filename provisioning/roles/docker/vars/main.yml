@@ -1,0 +1,15 @@
+---
+# vars file for docker
+docker_prerequisites:
+  - apt-transport-https
+  - ca-certificates
+  - "linux-image-extra-{{ ansible_kernel }}"
+  - linux-image-extra-virtual
+
+docker_packages:
+  - docker-engine
+
+docker_tools:
+  - docker-compose
+  - docker-py
+
