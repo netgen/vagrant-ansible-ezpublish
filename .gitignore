@@ -3,3 +3,4 @@
 www/
 .DS_Store
 Vagrantfile
+provisioning/vagrant.retry
