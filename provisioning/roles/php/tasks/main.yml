@@ -61,16 +61,6 @@
   ignore_errors: true
   when: ansible_os_family == "Debian"
 
-- name: Enable OpCache (PHP 5.6)
-  command: phpenmod -v 5.6 opcache
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
-
-- name: Enable OpCache (PHP 7.0)
-  command: phpenmod -v 7.0 opcache
-  ignore_errors: true
-  when: ansible_os_family == "Debian"
-
 - name: Install xdebug
   apt: name="{{ item }}" state=present update_cache=yes
   # located in vars/main.yml
