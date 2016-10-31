@@ -32,11 +32,11 @@ For example, we will be using the `v1.4.0` tag. We recommend using the tagged re
 
 6. Clone eZ Platform, clean or demo (mind the dot at the end of commands):
 
-    `git clone --branch v1.4.0 https://github.com/ezsystems/ezplatform.git .`
+    `git clone --branch v1.6.0.1 https://github.com/ezsystems/ezplatform.git .`
 
     or
 
-    `git clone --branch v1.4.0+demo.v1 https://github.com/ezsystems/ezplatform-demo.git .`
+    `git clone --branch v1.6.0 https://github.com/ezsystems/ezplatform-demo.git .`
 
 7. Run Composer (use default parameters at the end except for database name which should be `ezpublish`):
 
