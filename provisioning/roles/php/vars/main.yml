@@ -16,6 +16,7 @@ php_packages:
   - php5.6-imagick
   - php5.6-gd
   - php5.6-cgi
+  - php5.6-mbstring
 
 php_xdebug:
   - php5.6-xdebug
