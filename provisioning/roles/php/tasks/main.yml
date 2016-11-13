@@ -3,41 +3,20 @@
 - name: Add the OS specific varibles
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Check the php version
-  command: php -v
-  ignore_errors: True
-  register: php_version_result
-  when: ansible_os_family == "Debian" and use_php56 == true
-  tags: [packages, php55, packages]
-
-- name: Register the current extension directory
-  command: php-config --extension-dir
-  ignore_errors: True
-  register: php_extension_directory
-  when: ansible_os_family == "Debian" and use_php56 == true and php_version_result|failed == false
-  failed_when: "'/usr/lib/php5/20131226' in php_extension_directory.stdout"
-  tags: [php, php56, packages]
-
-- name: Remove dotdeb if installing php 5.6 (dotdeb)
-  # Remove specified repository from sources list.
-  apt_repository: repo='deb http://packages.dotdeb.org wheezy-php55 all' state=absent update_cache=yes
-  when: ansible_os_family == "Debian" and ansible_distribution_version|float >= 12.10 and use_php56 == true
-  tags: [php, php56, packages]
-
 - name: Add php 5.6 repository if needed for quantal and newer (ondrej)
   # Add specified repository into sources list.
-  apt_repository: repo='ppa:ondrej/php5-5.6/ubuntu trusty main' state=present update_cache=yes
+  apt_repository: repo='ppa:ondrej/php/ubuntu trusty main' state=present update_cache=yes
   when: ansible_os_family == "Debian" and ansible_distribution_version|float >= 12.10 and use_php56 == true
   tags: [php, php56, packages]
 
 - name: Install the php libraries (APT)
   apt: name="{{ item }}" state=latest update_cache=yes
-  with_items: php_packages
+  with_items: "{{ php_packages }}"
   when: ansible_os_family == "Debian" and php_packages|lower != 'none'
   tags: [php, packages]
 
 - name: Create CLI php.ini configuration
-  template: src=php.ini.cli.j2 dest=/etc/php5/cli/php.ini backup=yes owner=root group=root mode=0644
+  template: src=php.ini.cli.j2 dest=/etc/php/5.6/cli/php.ini backup=yes owner=root group=root mode=0644
   when: ansible_os_family == "Debian"
   tags: [configuration, php]
 
@@ -47,12 +26,12 @@
   when: use_php56 == false
 
 - name: Configure OpCache
-  copy: src=opcache.ini dest=/etc/php5/mods-available/opcache.ini
+  copy: src=opcache.ini dest="{{ php_mods_available }}/opcache.ini"
   ignore_errors: true
   when: ansible_os_family == "Debian"
 
 - name: Enable OpCache
-  command: php5enmod opcache
+  command: phpenmod opcache
   ignore_errors: true
   when: ansible_os_family == "Debian"
 
@@ -72,7 +51,7 @@
   when: ansible_os_family == "Debian" and use_xdebug == true
 
 - name: Disable XDebug
-  command: php5dismod xdebug
+  command: phpdismod xdebug
   ignore_errors: true
   when: ansible_os_family == "Debian" and use_xdebug == true and activate_xdebug == false
 
@@ -105,7 +84,7 @@
   tags: [php, packages]
 
 - name: Create Apache php.ini configuration
-  template: src=php.ini.fpm.j2 dest=/etc/php5/apache2/php.ini backup=yes owner=root group=root mode=0644
+  template: src=php.ini.fpm.j2 dest=/etc/php/5.6/apache2/php.ini backup=yes owner=root group=root mode=0644
   when: ansible_os_family == "Debian" and use_php5_fpm == false
   notify: restart Apache
   tags: [php, configuration]
@@ -129,18 +108,18 @@
   tags: [configuration,php_fpm]
 
 - name: Tune php5-fpm
-  copy: src=php-fpm.conf dest=/etc/php5/fpm/php-fpm.conf owner=root group=root mode=0644
+  copy: src=php-fpm.conf dest=/etc/php/5.6/fpm/php-fpm.conf owner=root group=root mode=0644
   notify: restart php5-fpm
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php_fpm]
 
 - name: Ensure php5-fpm service is up
-  action: service name=php5-fpm state=started
+  action: service name=php5.6-fpm state=started
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm]
 
 - name: Create FPM php configuration
-  template: src=php.ini.fpm.j2 dest=/etc/php5/fpm/php.ini backup=yes owner=root group=root mode=0644
+  template: src=php.ini.fpm.j2 dest=/etc/php/5.6/fpm/php.ini backup=yes owner=root group=root mode=0644
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   notify: restart php5-fpm
   tags: [configuration,php_fpm]
