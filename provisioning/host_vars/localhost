@@ -8,7 +8,7 @@ HOST: "vagrant.local"
 # defaults file for mysql
 USERNAME: "ez"
 PASSWORD: "ez"
-DB_NAME: "ezpublish"
+DB_NAME: "ezplatform"
 
 # We use eZ Publish specific VCL
 

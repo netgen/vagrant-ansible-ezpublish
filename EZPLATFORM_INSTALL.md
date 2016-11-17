@@ -38,7 +38,7 @@ For example, we will be using the `v1.4.0` tag. We recommend using the tagged re
 
     `git clone --branch v1.6.0 https://github.com/ezsystems/ezplatform-demo.git .`
 
-7. Run Composer (use default parameters at the end except for database name which should be `ezpublish`):
+7. Run Composer:
 
     `composer install --no-dev`
 
