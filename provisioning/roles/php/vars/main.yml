@@ -14,7 +14,6 @@ php_packages:
   - php5.6-xsl
   - imagemagick
   - php5.6-imagick
-  - php5.6-gd
   - php5.6-cgi
   - php5.6-mbstring
 
@@ -26,7 +25,7 @@ php_nofpm_packages:
 
 php_fpm_packages:
   - php5.6-fpm
-  - apache2-mpm-event
+#  - apache2-mpm-event
 
 apache_fpm_mpm:
   - mpm_event
