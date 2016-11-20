@@ -45,11 +45,6 @@
   ignore_errors: true
   when: ansible_os_family == "Debian" and use_xdebug == true
 
-- name: Disable XDebug
-  command: phpdismod xdebug
-  ignore_errors: true
-  when: ansible_os_family == "Debian" and use_xdebug == true and activate_xdebug == false
-
 - name: Install the php-fpm specific libraries (APT)
   apt: name="{{ item }}" state=present update_cache=yes
   # located in vars/main.yml
@@ -139,3 +134,8 @@
   notify: restart Apache
   when: ansible_os_family == "Debian" and use_php5_fpm == true
   tags: [php, php_fpm]
+
+- name: Disable XDebug
+  command: phpdismod xdebug
+  ignore_errors: true
+  when: ansible_os_family == "Debian" and use_xdebug == true and activate_xdebug == false
