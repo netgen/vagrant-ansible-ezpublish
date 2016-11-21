@@ -2,7 +2,7 @@
 # handlers file for php
 
 - name: restart php5-fpm
-  service: name=php5-fpm state=restarted
+  service: name=php5.6-fpm state=restarted
   become: yes
 
 - name: restart Apache

@@ -1,5 +1,11 @@
 ---
 
+- name: Add apache repository ondrej
+  # Add specified repository into sources list.
+  apt_repository: repo='ppa:ondrej/apache2/ubuntu trusty main' state=present update_cache=yes
+  when: ansible_os_family == "Debian" and ansible_distribution_version|float >= 12.10
+  tags: [php, php56, packages]
+
 - name: Install Apache packages
   apt: name="{{ item }}" state=present update_cache=yes
   with_items: apache_packages
