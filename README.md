@@ -9,6 +9,10 @@ Vagrant box, with Ansible provisioning to setup new eZ Publish project.
 - [Dinko Korunic]
 - [Edi Modric]
 
+## License
+
+[MIT](LICENSE)
+
 ## Prerequisites
 
 You need to have following installed:
