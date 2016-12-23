@@ -42,12 +42,15 @@ For example, we will be using the `v1.4.0` tag. We recommend using the tagged re
 
     `composer install --no-dev`
 
-8. Run installation command (for demo install use `demo` instead of `clean` option in installer):
+8. Create database
+    `php app/console doctrine:database:create`
+
+9. Run installation command (for demo install use `demo` instead of `clean` option in installer):
 
     `php app/console --env=prod ezplatform:install clean`
 
-9. Run:
+10. Run:
 
     `php app/console --env=prod assetic:dump`
 
-10. Go to browser and enter http://172.21.12.10/  (frontend) and http://172.21.12.10/ez (backend with user `admin` and pass `publish`)
+11. Go to browser and enter http://172.21.12.10/  (frontend) and http://172.21.12.10/ez (backend with user `admin` and pass `publish`)
