@@ -41,9 +41,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   if OS.windows?
       config.vm.synced_folder "./ezpublish", "/var/www/ezpublish", type: "nfs"
+  elsif OS.mac?
+      config.vm.synced_folder "./ezpublish", "/var/www/ezpublish",
+          mount_options: ["noatime,intr,nordirplus,nolock,async,noacl,fsc,tcp"],
+          type: "nfs"
   else
       config.vm.synced_folder "./ezpublish", "/var/www/ezpublish",
-          mount_options: ["noatime,intr,rdirplus"],
+          mount_options: ["noatime,intr,rdirplus,tcp"],
           type: "nfs"
   end
 
@@ -59,6 +63,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
 
   if OS.windows?
