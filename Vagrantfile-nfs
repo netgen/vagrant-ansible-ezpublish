@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           type: "nfs"
   else
       config.vm.synced_folder "./ezpublish", "/var/www/ezpublish",
-          mount_options: ["noatime,intr,rdirplus,tcp"],
+          mount_options: ["noatime,intr,nordirplus,nolock,async,noacl,fsc,tcp"],
           type: "nfs"
   end
 
