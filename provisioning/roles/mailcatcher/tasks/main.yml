@@ -4,7 +4,7 @@
   include_vars: "{{ ansible_os_family }}.yml"
 
 - name: Add Brightbox signing keys
-  apt_key: keyserver=keyserver.ubuntu.com id=80F70E11F0F0D5F10CB20E62F5DA5F09C3173AA6
+  apt_key: url=https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF5DA5F09C3173AA6 state=present id="C3173AA6"
 
 - name: Add Brightbox ppa for ruby
   apt_repository: repo='ppa:brightbox/ruby-ng' update_cache=yes
