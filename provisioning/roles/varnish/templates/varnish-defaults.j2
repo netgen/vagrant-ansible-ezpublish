@@ -37,7 +37,6 @@ RELOAD_VCL=1
 #DAEMON_OPTS="-a :6081 \
 #             -T localhost:6082 \
 #             -b localhost:8080 \
-#             -u varnish -g varnish \
 #             -s file,/var/lib/varnish/varnish_storage.bin,1G"
 
 
@@ -50,7 +49,6 @@ RELOAD_VCL=1
 #DAEMON_OPTS="-a :6081 \
 #             -T localhost:6082 \
 #             -f /etc/varnish/default.vcl \
-#             -u varnish -g varnish \
 #             -S /etc/varnish/secret \
 #             -s file,/var/lib/varnish/varnish_storage.bin,1G"
 
@@ -99,7 +97,6 @@ DAEMON_OPTS="-a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
              -p thread_pool_min=${VARNISH_MIN_THREADS} \
              -p thread_pool_max=${VARNISH_MAX_THREADS} \
              -p thread_pool_timeout=${VARNISH_THREAD_TIMEOUT} \
-             -u varnish -g varnish \
              -S ${VARNISH_SECRET_FILE} \
              -s ${VARNISH_STORAGE}"
 #
