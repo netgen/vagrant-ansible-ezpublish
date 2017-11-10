@@ -1,12 +1,22 @@
 ---
 # tasks file for varnish
 
-- name: Add Varnish apt key
-  apt_key: url=http://repo.varnish-cache.org/debian/GPG-key.txt state=present
+- name: Varnish version to use
+  set_fact:
+    varnish_version: '4.1'
+
+- name: Set the packagecloud repository name based on the version.
+  set_fact:
+    varnish_packagecloud_repo: "varnish{{ varnish_version|replace('.', '') }}"
+
+- name: Add packagecloud.io Varnish apt key
+  apt_key:
+    url: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/gpgkey
+    state: present
 
 - name: Add Varnish apt repository
   apt_repository:
-    repo: 'deb http://repo.varnish-cache.org/ubuntu {{ ansible_distribution_release }} varnish-4.0'
+    repo: 'deb https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/ubuntu {{ ansible_distribution_release }} main'
     state: present
 
 - name: Install Varnish.
