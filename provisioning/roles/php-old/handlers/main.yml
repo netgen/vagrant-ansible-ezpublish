@@ -1,0 +1,14 @@
+---
+# handlers file for php
+
+- name: restart php5-fpm
+  service: name=php5.6-fpm state=restarted
+  become: yes
+
+- name: restart Apache
+  service: name=apache2 state=restarted
+  become: yes
+
+- name: reload Apache
+  service: name=apache2 state=reloaded
+  become: yes

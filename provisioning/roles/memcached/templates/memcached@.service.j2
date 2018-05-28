@@ -1,0 +1,11 @@
+[Unit]
+Description=memcached-%i daemon
+After=network.target
+Documentation=man:memcached(1)
+
+[Service]
+ExecStart=/usr/share/memcached/scripts/systemd-memcached-wrapper /etc/memcached-%i.conf
+
+[Install]
+WantedBy=multi-user.target
+

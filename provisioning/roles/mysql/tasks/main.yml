@@ -1,56 +1,45 @@
 ---
 # tasks file for mysql
 
-- name: Check the mysql version
-  command: mysql -V
-  ignore_errors: True
-  register: mysql_version_result
-  when: ansible_os_family == "Debian" and use_mysql56 == true
-  tags: [mysql, mysql56, packages]
+- name: Add the Percona signing keys
+  apt_key: url=https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x9334A25F8507EFA5 state=present id="8507EFA5"
 
-- name: Remove the existing mysql libraries
-  apt: name="{{ item }}" state=absent update_cache=yes
-  with_items: "{{ mysql_packages }}"
-  when: ansible_os_family == "Debian" and use_mysql56 == true and not mysql_version_result|failed == false
-  tags: [mysql, mysql56, packages]
-
-- name: Add mysql 5.6 repository if needed
-  # Add specified repository into sources list.
-  apt_repository: repo='ppa:ondrej/mysql-5.6' state=present
-  when: ansible_os_family == "Debian" and use_mysql56 == true and mysql_version_result|failed
-  tags: [mysql, mysql56, packages]
-
-- name: update apt if installing mysql 5.6
-  apt: update_cache=yes
-  when: ansible_os_family == "Debian" and use_mysql56 == true
-  tags: [mysql, mysql56, packages]
+- name: Add Percona repo
+  apt_repository: repo='{{ item }} bionic main' state=present update_cache=yes
+  with_items:
+    - deb http://repo.percona.com/apt
+    - deb-src http://repo.percona.com/apt
+  when: ansible_os_family == "Debian"
+  tags: [mysql, packages]
 
 - name: Install the packages
   apt: name="{{ item }}" state=present update_cache=yes
   with_items: "{{ mysql_packages }}"
-  when: ansible_os_family == "Debian"
   tags: [mysql,packages]
+  environment:
+    DEBIAN_FRONTEND: noninteractive
 
-- name: ensure mysql service is up
+- name: Ensure mysql service is up
   action: service name=mysql state=started
   tags: [mysql,services]
 
-- name: Tune for eZ development
-  copy: src=ez-dev.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+- name: Tuning and replication setup
+  template: src=local.cnf.j2 dest=/etc/mysql/conf.d/001-local.cnf owner=root group=root mode=0644
   notify: restart mysql
-  when: use_mysql_dev == true
   tags: [mysql]
 
-- name: Tune for eZ production
-  copy: src=ez-prod.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+- name: Create systemd override directory
+  file:
+    path: /etc/systemd/system/mysql.service.d
+    state: directory
+  tags: [mysql,services]
+
+- name: Add systemd override
+  copy: src=override.conf dest=/etc/systemd/system/mysql.service.d/override.conf owner=root group=root mode=0644
   notify: restart mysql
-  when: use_mysql_dev == false
-  tags: [mysql]
+  tags: [mysql,services]
 
-- name: Create the dev database
-  mysql_db: name="{{ DB_NAME }}" state=present encoding=utf8 collation=utf8_general_ci
-  tags: [mysql]
-
-- name: Create the dev user for the mysql
-  mysql_user: name="{{ USERNAME }}" password="{{ PASSWORD }}" priv="{{ DB_NAME }}.*:ALL,GRANT" state=present
-  tags: [mysql]
+- name: Update update-rc.d
+  shell: update-rc.d mysql defaults
+  become: yes
+  tags: [mysql,services]

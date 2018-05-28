@@ -1,0 +1,13 @@
+---
+# tasks file for rabbitmq
+- name: Add the Nodesource signing keys
+  apt_key: url=https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x6B73A36E6026DFCA state=present id="6026DFCA"
+
+- name: add RabbitMQ repo
+  apt_repository: repo='deb http://www.rabbitmq.com/debian/ testing main' state=present update_cache=yes
+  tags: [rabbitmq, packages]
+
+- name: Install Rabbitmq
+  apt: name=rabbitmq-server state=latest update_cache=yes
+  tags: [rabbitmq, packages]
+

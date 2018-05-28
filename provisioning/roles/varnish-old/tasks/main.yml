@@ -1,0 +1,47 @@
+---
+# tasks file for varnish
+
+- name: Varnish version to use
+  set_fact:
+    varnish_version: '4.1'
+
+- name: Set the packagecloud repository name based on the version.
+  set_fact:
+    varnish_packagecloud_repo: "varnish{{ varnish_version|replace('.', '') }}"
+
+- name: Add packagecloud.io Varnish apt key
+  apt_key:
+    url: https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/gpgkey
+    state: present
+
+- name: Add Varnish apt repository
+  apt_repository:
+    repo: 'deb https://packagecloud.io/varnishcache/{{ varnish_packagecloud_repo }}/ubuntu {{ ansible_distribution_release }} main'
+    state: present
+
+- name: Install Varnish.
+  apt: name=varnish state=installed
+
+- name: Copy Varnish defaults script to defaults
+  template: src=varnish-defaults.j2 dest=/etc/default/varnish owner=root group=root mode=0755
+
+- name: Update update-rc.d
+  shell: update-rc.d varnish defaults
+  become: yes
+
+- name: Ensure Varnish config path exists.
+  file: path="{{ VARNISH_CONFIG_PATH }}" state=directory
+
+- name: Copy Varnish default VCL.
+  template: src=default_vcl.j2 dest="{{ VARNISH_CONFIG_PATH }}/default.vcl" owner=root group=root mode=0644
+  when: VARNISH_USE_DEFAULT_VCL == true
+  notify: restart varnish
+
+- name: Copy eZ Publish Varnish VCL.
+  template: src=ezpublish_vcl.j2 dest="{{ VARNISH_CONFIG_PATH }}/default.vcl" owner=root group=root mode=0644
+  when: VARNISH_USE_DEFAULT_VCL == false
+  notify: restart varnish
+
+- name: Copy varnish secret.
+  template: src=secret.j2 dest="{{ VARNISH_CONFIG_PATH }}/secret" owner=root group=root mode=0644
+  notify: restart varnish

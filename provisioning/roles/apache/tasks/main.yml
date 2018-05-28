@@ -34,8 +34,8 @@
   when: ansible_os_family == "Debian"
   tags: [apache2]
 
-- name: ensure Apache service is up (and enable it at boot)
-  action: service name=apache2 state=started enabled=yes
+- name: ensure Apache service is stopped (and disable it at boot)
+  action: service name=apache2 state=stopped enabled=no
   tags: [apache2]
 
 - name: configure mpm prefork

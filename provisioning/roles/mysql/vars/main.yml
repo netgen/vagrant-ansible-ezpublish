@@ -1,6 +1,5 @@
 ---
-# vars file for mysql
-
 mysql_packages:
-  - python-mysqldb
-  - mysql-server
+  - percona-server-server-5.7
+  - percona-toolkit
+  - percona-xtrabackup

@@ -5,21 +5,27 @@
 
 - name: Add Nodesource repo (formerly known as Chris Lea repo) for nodejs, because ubuntu
   # Add specified repository into sources list.
-  apt_repository: repo='{{ item }} trusty main' state=present update_cache=yes
+  apt_repository: repo='{{ item }} bionic main' state=present update_cache=yes
   with_items:
-    - deb https://deb.nodesource.com/node_4.x
-    - deb-src https://deb.nodesource.com/node_4.x
+    - deb https://deb.nodesource.com/node_10.x/
+    - deb-src https://deb.nodesource.com/node_10.x
   when: ansible_os_family == "Debian"
   tags: [nodejs, packages]
 
 - name: Install node.js and npm (APT)
-  apt: name=nodejs state=latest update_cache=yes
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - nodejs
   when: ansible_os_family == "Debian"
   tags: [nodejs, packages]
 
-- name: install uglifiers
-  command: "npm install -g {{ item }}"
+- name: Install required node packages
+  npm:
+    name: "{{ item }}"
+    global: yes
+    state: latest
   with_items:
     - uglify-js
     - uglifycss
+    - less
   tags: [nodejs, packages]

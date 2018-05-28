@@ -1,0 +1,6 @@
+---
+# Nginx defaults
+
+PROJECT_ROOT: "/var/www"
+PROJECT_NAME: "netgen"
+PROJECT_PHP_VERSION: "7.2"

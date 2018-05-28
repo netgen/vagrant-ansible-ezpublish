@@ -1,0 +1,35 @@
+---
+# vars file for php
+
+php_packages:
+  - php5.6-dev
+  - php5.6-cli
+  - php5.6-mysql
+  - php5.6-pgsql
+  - php-pear
+  - php5.6-mcrypt
+  - php5.6-curl
+  - php5.6-gd
+  - php5.6-intl
+  - php5.6-xsl
+  - imagemagick
+  - php5.6-imagick
+  - php5.6-cgi
+  - php5.6-mbstring
+
+php_xdebug:
+  - php5.6-xdebug
+
+php_nofpm_packages:
+  - libapache2-mod-php5
+
+php_fpm_packages:
+  - php5.6-fpm
+
+apache_fpm_mpm:
+  - mpm_event
+
+apache_nonfpm_mpm:
+  - mpm_worker
+  - mpm_prefork
+  - mpm_itk

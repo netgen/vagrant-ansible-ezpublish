@@ -11,17 +11,19 @@ common_packages:
   - htop
   - build-essential
   - wget
-  - python-software-properties
+  - python3-software-properties
   - software-properties-common
   - unzip
   - tmux
   - ntp
   - python-psycopg2
   - python-setuptools
-  - libreadline6
-  - libreadline6-dev
+  - libreadline7
+  - libreadline-dev
   - ncurses-dev
   - python-dev
   - libpq-dev
+  - apt-transport-https
+  - acl
+  - ca-certificates
 
-PROJECT_TIMEZONE: 'America/New_York'

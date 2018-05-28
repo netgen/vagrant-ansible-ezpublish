@@ -1,0 +1,28 @@
+---
+# tasks file for csync2
+
+- name: Install the packages
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items:
+    - lsyncd
+    - csync2
+  tags: [csync2,packages]
+
+- name: Create lsyncd configuration directory
+  file:
+    path: /etc/lsyncd
+    state: directory
+
+- name: Create csync2 configuration directory
+  file:
+    path: /etc/csync2
+    state: directory
+
+- name: Ensure lsyncd service is up
+  action: service name=lsyncd state=started
+  tags: [csync2,services]
+
+- name: csync2 tuning
+  template: src=lsyncd.conf.lua.j2 dest=/etc/lsyncd/lsyncd.conf.lua owner=root group=root mode=0644
+  notify: restart lsyncd
+  tags: [csync2]

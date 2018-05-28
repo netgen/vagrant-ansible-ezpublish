@@ -1,0 +1,58 @@
+[mysqld]
+
+{% if not mysql_replication %}
+bind-address = 127.0.0.1
+{% endif %}
+table_open_cache = 4096
+sort_buffer_size = 16M
+read_buffer_size = 8M
+read_rnd_buffer_size = 16M
+thread_cache_size = 4
+query_cache_type = 0
+query_cache_size = 0
+thread_stack = 256K
+tmp_table_size = 400M
+max_heap_table_size = 400M
+expire_logs_days = 1
+max_connections = 400
+back_log = 1024
+thread_pool_size = 32
+
+innodb_buffer_pool_size = 2G
+innodb_buffer_pool_instances = {{ ansible_processor_count }}
+innodb_log_file_size = 128M
+innodb_flush_method = O_DIRECT
+innodb_thread_concurrency = {{ ansible_processor_count }}
+innodb_lock_wait_timeout = 60
+innodb_file_per_table = 1
+innodb_flush_log_at_trx_commit = 2
+
+# Isolation level
+transaction-isolation = READ-COMMITTED
+
+{% if mysql_replication %}
+server-id = {{ mysql_server_id }}
+report-host = {{ ansible_hostname }}
+read_only = false
+
+# Binary log settings
+log_bin = /var/log/mysql/mysql-bin.log
+expire_logs_days = 7
+max_binlog_size = 512M
+binlog_format = MIXED
+
+# Cascading replication relay logs (needed mainly for master-master)
+log-slave-updates = 1
+replicate-same-server-id = 0
+
+# Circular replication auto_increment settings
+auto_increment_increment = 2
+## OVERRIDE THIS MANUALLY
+auto_increment_offset = 0
+
+# Relay log setting
+relay-log = /var/log/mysql/{{ansible_hostname}}-relay-bin.log
+relay-log-index = /var/lib/mysql/{{ansible_hostname}}-relay-bin.index
+max-relay-log-size = 1024M
+relay-log-space-limit = 4096M
+{% endif %}

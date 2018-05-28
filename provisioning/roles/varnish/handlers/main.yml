@@ -2,4 +2,5 @@
 # handlers file for varnish
 
 - name: restart varnish
-  command: service varnish restart
+  service: name=varnish state=restarted
+  become: yes

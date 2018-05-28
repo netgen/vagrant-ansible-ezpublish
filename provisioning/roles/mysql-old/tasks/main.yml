@@ -1,0 +1,56 @@
+---
+# tasks file for mysql
+
+- name: Check the mysql version
+  command: mysql -V
+  ignore_errors: True
+  register: mysql_version_result
+  when: ansible_os_family == "Debian" and use_mysql56 == true
+  tags: [mysql, mysql56, packages]
+
+- name: Remove the existing mysql libraries
+  apt: name="{{ item }}" state=absent update_cache=yes
+  with_items: "{{ mysql_packages }}"
+  when: ansible_os_family == "Debian" and use_mysql56 == true and not mysql_version_result|failed == false
+  tags: [mysql, mysql56, packages]
+
+- name: Add mysql 5.6 repository if needed
+  # Add specified repository into sources list.
+  apt_repository: repo='ppa:ondrej/mysql-5.6' state=present
+  when: ansible_os_family == "Debian" and use_mysql56 == true and mysql_version_result|failed
+  tags: [mysql, mysql56, packages]
+
+- name: update apt if installing mysql 5.6
+  apt: update_cache=yes
+  when: ansible_os_family == "Debian" and use_mysql56 == true
+  tags: [mysql, mysql56, packages]
+
+- name: Install the packages
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items: "{{ mysql_packages }}"
+  when: ansible_os_family == "Debian"
+  tags: [mysql,packages]
+
+- name: ensure mysql service is up
+  action: service name=mysql state=started
+  tags: [mysql,services]
+
+- name: Tune for eZ development
+  copy: src=ez-dev.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+  notify: restart mysql
+  when: use_mysql_dev == true
+  tags: [mysql]
+
+- name: Tune for eZ production
+  copy: src=ez-prod.cnf dest=/etc/mysql/conf.d/ez.cnf owner=root group=root mode=0644
+  notify: restart mysql
+  when: use_mysql_dev == false
+  tags: [mysql]
+
+- name: Create the dev database
+  mysql_db: name="{{ DB_NAME }}" state=present encoding=utf8 collation=utf8_general_ci
+  tags: [mysql]
+
+- name: Create the dev user for the mysql
+  mysql_user: name="{{ USERNAME }}" password="{{ PASSWORD }}" priv="{{ DB_NAME }}.*:ALL,GRANT" state=present
+  tags: [mysql]

@@ -1,0 +1,44 @@
+---
+# tasks file for nginx
+
+- name: Install the packages
+  apt: name="nginx" state=present update_cache=yes
+  tags: [nginx,packages]
+
+- name: ensure nginx service is up
+  action: service name=nginx state=started
+  tags: [nginx,services]
+
+- name: remove default vhost
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: reload nginx
+
+- name: copy ezPublish params
+  copy: src=ez_params.d dest=/etc/nginx/ owner=root group=root mode=0644
+  notify: reload nginx
+  tags: [nginx]
+
+- name: create vhost root directory
+  file:
+    path: "{{ PROJECT_ROOT }}/{{ PROJECT_NAME }}/web"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create vhost symlink
+  file:
+    src: "/etc/nginx/sites-available/{{ PROJECT_NAME }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ PROJECT_NAME }}.conf"
+    owner: root
+    group: root
+    state: link
+    force: yes
+
+- name: generate vhost configuration
+  template: src=vhost.conf.j2 dest="/etc/nginx/sites-available/{{ PROJECT_NAME }}.conf" owner=root group=root mode=0644
+  notify: reload nginx
+  tags: [nginx]
+

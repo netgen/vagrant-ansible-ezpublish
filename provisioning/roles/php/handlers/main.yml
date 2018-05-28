@@ -1,14 +1,18 @@
 ---
 # handlers file for php
 
-- name: restart php5-fpm
-  service: name=php5.6-fpm state=restarted
+- name: restart php-fpm
+  service: name="php{{ PROJECT_PHP_VERSION }}-fpm" state=restarted
   become: yes
 
-- name: restart Apache
-  service: name=apache2 state=restarted
+- name: reload php-fpm
+  service: name="php{{ PROJECT_PHP_VERSION }}-fpm" state=reloaded
   become: yes
 
-- name: reload Apache
-  service: name=apache2 state=reloaded
+- name: restart Nginx
+  service: name=nginx state=restarted
+  become: yes
+
+- name: reload Nginx
+  service: name=nginx state=reloaded
   become: yes

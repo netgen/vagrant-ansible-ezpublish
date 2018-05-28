@@ -1,7 +1,5 @@
 ---
-# defaults file for mysql
-USERNAME: dev
-PASSWORD:
-DB_NAME: dev
+# MySQL defaults
 
-use_mysql_dev: true
+mysql_server_id: "{{ ansible_default_ipv4.address.split('.')[3] }}"
+mysql_replication: false

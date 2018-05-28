@@ -1,0 +1,17 @@
+---
+# tasks file for users
+
+- name: Add NetGen user
+  user:
+    name: "{{ PROJECT_USER }}"
+    home: "{{ PROJECT_USER_HOME }}"
+    groups: "{{ PROJECT_USER_GROUPS }}"
+    shell: /bin/bash
+
+- name: Add SSH authorized keys for NetGen user
+  authorized_key:
+    user: "{{ PROJECT_USER }}"
+    state: present
+    key: "{{ item }}"
+  with_items: "{{ PROJECT_KEYS }}"
+
