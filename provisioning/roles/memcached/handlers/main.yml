@@ -1,0 +1,8 @@
+---
+# handlers file for memcached
+- name: restart memcached
+  service: name=memcached state=restarted
+  become: yes
+
+- name: reload systemctl
+  command: systemctl daemon-reload
