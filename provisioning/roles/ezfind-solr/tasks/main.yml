@@ -6,14 +6,14 @@
   when: ansible_os_family == "Debian"
   tags: [ezfind, packages]
 
-- name: Copy the ezfind solr init.d script
-  template: src=solr-init.conf.j2 dest=/etc/init.d/solr backup=yes owner=root group=root mode=0755
-  when: ansible_os_family == "Debian"
-  tags: [ezfind, configuration]
-
-- name: Update update-rc.d
-  shell: update-rc.d solr defaults
-  become: yes
-
-- name: Start the upstart service
-  service: name=solr state=started
+#- name: Copy the ezfind solr init.d script
+#  template: src=solr-init.conf.j2 dest=/etc/init.d/solr backup=yes owner=root group=root mode=0755
+#  when: ansible_os_family == "Debian"
+#  tags: [ezfind, configuration]
+#
+#- name: Update update-rc.d
+#  shell: update-rc.d solr defaults
+#  become: yes
+#
+#- name: Start the upstart service
+#  service: name=solr state=started
