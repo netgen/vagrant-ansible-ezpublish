@@ -3,7 +3,7 @@
 
 apache_packages:
     - apache2
-    - libapache2-mod-fastcgi
+    - libapache2-mod-fcgid
 
 common_modules:
     - status
@@ -12,7 +12,7 @@ common_modules:
     - deflate
     - mime_magic
     - alias
-    - fastcgi
+    - cgid
     - actions
     - proxy_fcgi
     - setenvif
