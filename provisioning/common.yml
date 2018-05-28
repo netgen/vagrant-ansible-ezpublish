@@ -1,6 +1,8 @@
 ---
 - hosts: all
   become: yes
+  vars:
+      ansible_python_interpreter: "/usr/bin/python3"
   # You should remember this from my puppet rants
   # Execute the apt-get update only if it was last executed more than 12 hours ago
   pre_tasks:
