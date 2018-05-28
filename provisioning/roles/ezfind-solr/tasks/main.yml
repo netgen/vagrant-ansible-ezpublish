@@ -1,8 +1,8 @@
 ---
 # tasks file for ezfind-solr
 
-- name: Install the openjdk-7-jdk (APT)
-  apt: name=openjdk-7-jdk state=latest update_cache=yes
+- name: Install the openjdk-8-jdk (APT)
+  apt: name=openjdk-8-jdk state=latest update_cache=yes
   when: ansible_os_family == "Debian"
   tags: [ezfind, packages]
 
@@ -15,10 +15,5 @@
   shell: update-rc.d solr defaults
   become: yes
 
-- name: Copy the upstart script to trigger solr service on vagrant mount event
-  template: src=vagrant-mount-upstart.conf.j2 dest=/etc/init/solr-upstart.conf backup=yes owner=root group=root mode=0755
-  when: ansible_os_family == "Debian"
-  tags: [ezfind, configuration]
-
 - name: Start the upstart service
-  service: name=solr-upstart state=started
+  service: name=solr state=started
