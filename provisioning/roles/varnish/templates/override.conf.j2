@@ -1,0 +1,4 @@
+[Service]
+ExecStart=
+ExecStart=/usr/sbin/varnishd -F -a :{{ VARNISH_LISTEN_PORT }} -T {{ VARNISH_ADMIN_LISTEN_HOST }}:{{ VARNISH_ADMIN_LISTEN_PORT }} -f /etc/varnish/default.vcl -S /etc/varnish/secret -s {{ VARNISH_STORAGE }} -p vsl_reclen=2048
+Restart=always

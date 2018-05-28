@@ -1,0 +1,79 @@
+---
+# tasks file for php
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Add PHP apt key
+  apt_key: url=https://packages.sury.org/php/apt.gpg state=present
+
+- name: Add PHP apt repository
+  apt_repository:
+    repo: 'ppa:ondrej/php/ubuntu {{ ansible_distribution_release }} main'
+    state: present
+
+- name: Install the php libraries (APT)
+  apt: name="{{ item }}" state=latest update_cache=yes
+  with_items: "{{ php_packages }}"
+  tags: [php, packages]
+
+- name: Install xdebug
+  apt: name="{{ item }}" state=present update_cache=yes
+  # located in vars/main.yml
+  with_items: "{{ php_xdebug }}"
+  when: ansible_os_family == "Debian"
+  tags: [php, packages, xdebug, dev]
+
+- name: Disable XDebug
+  command: phpdismod xdebug
+  ignore_errors: true
+  when: ansible_os_family == "Debian"
+
+- name: Install the php-fpm specific libraries (APT)
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items: "{{ php_fpm_packages }}"
+  tags: [php, php_fpm, packages]
+
+- name: Ensure PHP FPM service is up
+  action: service name="php{{ PROJECT_PHP_VERSION }}-fpm" state=started
+  tags: [php, php_fpm]
+
+- name: Set PHP FPM emergency restart threshold
+  lineinfile:
+    dest: "{{ php_fpm_conf_path }}"
+    regexp: '^[; ]*emergency_restart_threshold'
+    line: "emergency_restart_threshold = {{ php_fpm_emergency_restart_threshold }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload php-fpm
+
+- name: Set PHP FPM emergency restart interval
+  lineinfile:
+    dest: "{{ php_fpm_conf_path }}"
+    regexp: '^[; ]*emergency_restart_interval'
+    line: "emergency_restart_interval = {{ php_fpm_emergency_restart_interval }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload php-fpm
+
+- name: Set PHP FPM process control timeout
+  lineinfile:
+    dest: "{{ php_fpm_conf_path }}"
+    regexp: '^[; ]*process_control_timeout'
+    line: "process_control_timeout = {{ php_fpm_process_control_timeout }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload php-fpm
+
+- name: Set up local configuration for CLI
+  template: src=local.ini.cli.j2 dest="{{ php_cli_conf_d_path }}/99-local.ini" owner=root group=root mode=0644 force=yes
+
+- name: Set up local configuration for FPM
+  template: src=local.ini.fpm.j2 dest="{{ php_fpm_conf_d_path }}/99-local.ini" owner=root group=root mode=0644 force=yes
+  notify: reload php-fpm
+
+- name: Set up pool configuration
+  template: src=www.conf.j2 dest={{ php_fpm_pool_d_path }}/www.conf owner=root group=root mode=0644 force=yes
+  notify: reload php-fpm

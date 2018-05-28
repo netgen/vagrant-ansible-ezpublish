@@ -1,0 +1,18 @@
+error_reporting = {{ php_fpm_error_reporting }}
+memory_limit = {{ php_fpm_memory_limit }}
+expose_php = {{ php_fpm_expose_php }}
+display_errors = {{ php_fpm_display_errors }}
+display_startup_errors = {{ php_fpm_display_startup_errors }}
+max_execution_time = {{ php_fpm_max_execution_time }}
+max_input_time = {{ php_fpm_max_input_time }}
+upload_max_filesize = {{ php_fpm_upload_max_filesize }}
+post_max_size = {{ php_fpm_post_max_size }}
+
+session.save_handler = {{ php_session_save_handler }}
+session.save_path = "{{ php_session_save_path }}"
+
+opcache.enable = 1
+opcache.enable_cli = 0
+opcache.memory_consumption = 384
+opcache.interned_strings_buffer = 16
+opcache.max_accelerated_files = 20000

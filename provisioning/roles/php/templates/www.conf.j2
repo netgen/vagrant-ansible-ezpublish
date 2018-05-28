@@ -1,0 +1,12 @@
+[www]
+user = www-data
+group = www-data
+listen = /run/php/php{{ PROJECT_PHP_VERSION }}-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+pm = dynamic
+pm.max_children = 100
+pm.start_servers = 20
+pm.min_spare_servers = 10
+pm.max_spare_servers = 30
+chdir = /

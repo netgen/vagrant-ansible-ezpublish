@@ -1,0 +1,5 @@
+---
+# handlers file for lsyncd
+- name: restart lsyncd
+  service: name=lsyncd state=restarted
+  become: yes

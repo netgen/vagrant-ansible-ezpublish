@@ -1,0 +1,119 @@
+server {
+    listen 8080 default_server;
+    # Further documentation: http://nginx.org/en/docs/http/server_names.html
+    server_name _;
+
+    server_tokens off;
+    disable_symlinks off;
+
+    root {{ PROJECT_ROOT }}/{{ PROJECT_NAME }}/web;
+
+    # Upload max size
+    client_max_body_size 48m;
+
+    # Main rewrite rules
+    rewrite ^/app(_.+)?\.php(/(.*)|$) /$3 permanent;
+    rewrite \.php /app.php$uri last;
+
+    # Cluster/streamed files rewrite rules. Enable on cluster with DFS as a binary data handler
+    #rewrite ^/var/([^/]+/)?storage/images(-versioned)?/ /app.php last;
+    #rewrite ^/var/([^/]+/)?cache/(texttoimage|public)/ /index_cluster.php last;
+
+    location /.well-known/acme-challenge/ {
+        # Let's Encrypt support
+    }
+
+    # Legacy locations
+    location ~ ^/var/([^/]+/)?cache/(texttoimage|public)/ { }
+    location ~ ^/design/[^/]+/(stylesheets|images|fonts|javascript)/ { }
+    location ~ ^/share/icons/ { }
+    location ~ ^/extension/[^/]+/design/[^/]+/(stylesheets|flash|images|fonts|lib|javascripts?)/ { }
+
+    location ~ ^/var/([^/]+/)?storage/images(-versioned)?/ {
+        # Direct access to images
+    }
+
+    location ~ ^/(favicon\.ico|robots\.txt|w3c/p3p\.xml)$ {
+        # Give direct access to favicon.ico, robots.txt and P3P
+    }
+
+    location ~ ^/(bundles|assets)/ {
+        # Needed to correctly display bundle and project assets
+    }
+
+    location ~ ^/(css|js|fonts?)/.*\.(css|js|otf|eot|ttf|svg|woff) {
+        # For eZ Publish 5.1 / 2013.4 and higher.
+        # Don't forget to run php app/console assetic:dump --env=prod
+        # and make sure to comment this location block out in DEV
+        # environment.
+    }
+
+    location ~ /\.(svn|git|ht) {
+        deny all;
+    }
+
+    location ~ \.php(/|$) {
+        internal;
+
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        try_files $fastcgi_script_name =404;
+
+        set $path_info $fastcgi_path_info;
+        fastcgi_param PATH_INFO $path_info;
+
+        include fastcgi.conf;
+
+        fastcgi_param PATH_TRANSLATED $document_root$path_info;
+
+        fastcgi_read_timeout 90s;
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 4 256k;
+        fastcgi_busy_buffers_size 256k;
+
+        # FPM socket
+        fastcgi_pass unix:/var/run/php/php{{ PROJECT_PHP_VERSION }}-fpm.sock;
+
+        ## eZ Platform ENVIRONMENT variables, used for customizing app.php execution (not used by console commands)
+
+        # Environment.
+        # Possible values: "prod" and "dev" out-of-the-box, other values possible with proper configuration
+        # Make sure to comment the "ez_params.d/ez_prod_rewrite_params" include above in dev.
+        # Defaults to "prod" if omitted
+        fastcgi_param SYMFONY_ENV prod;
+
+        # Whether to use custom ClassLoader (autoloader) file
+        # Needs to be a valid path relative to root web/ directory
+        # Defaults to bootstrap.php.cache, or autoload.php in debug
+        #fastcgi_param SYMFONY_CLASSLOADER_FILE "../app/autoload.php";
+
+        # Whether to use debugging.
+        # Possible values: 0 or 1
+        # Defaults to 0 if omitted, unless SYMFONY_ENV is set to: "dev"
+        #fastcgi_param SYMFONY_DEBUG "0";
+
+        # Optional: Whether to use Symfony's builtin HTTP Caching Proxy.
+        # Disable it if you are using an external reverse proxy (e.g. Varnish)
+        # Possible values: 0 or 1
+        # Defaults to 1 if omitted, unless SYMFONY_ENV is set to: "dev"
+        fastcgi_param SYMFONY_HTTP_CACHE "0";
+
+        # Optional: Whether to use custom HTTP Cache class if SYMFONY_HTTP_CACHE is enabled
+        # Value must be na autoloadable cache class
+        # Defaults to "AppCache"
+        #fastcgi_param SYMFONY_HTTP_CACHE_CLASS "\Vendor\Project\MyCache";
+
+        # Optional: Defines the proxies to trust
+        # Needed when using Varnish as proxy, if so disable SYMFONY_HTTP_CACHE.
+        # Separate entries by a comma, example: "proxy1.example.com,proxy2.example.org"
+        # Defaults to not be set if env value is omitted or empty
+        fastcgi_param SYMFONY_TRUSTED_PROXIES "127.0.0.1";
+    }
+
+    location / {
+        rewrite ^ /app.php$uri last;
+    }
+
+    # Custom logging
+    # access_log /var/log/nginx/access.log;
+    # error_log  /var/log/nginx/error.log notice;
+}

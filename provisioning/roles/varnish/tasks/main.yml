@@ -1,0 +1,30 @@
+---
+# tasks file for varnish
+
+- name: Add Varnish apt key
+  apt_key: url=https://packagecloud.io/varnishcache/varnish41/gpgkey state=present
+
+- name: Add Varnish apt repository
+  apt_repository:
+    repo: 'deb https://packagecloud.io/varnishcache/varnish41/debian/ stretch main'
+    state: present
+
+- name: Install Varnish.
+  apt: name=varnish state=installed
+
+- name: create systemd override directory
+  file:
+    path: /etc/systemd/system/varnish.service.d
+    state: directory
+
+- name: add systemd override
+  template: src=override.conf.j2 dest=/etc/systemd/system/varnish.service.d/override.conf owner=root group=root mode=0644
+  notify: restart varnish
+
+- name: Update update-rc.d
+  shell: update-rc.d varnish defaults
+  become: yes
+
+- name: Copy Varnish default VCL.
+  template: src=default_vcl.j2 dest="{{ VARNISH_CONFIG_PATH }}/default.vcl" owner=root group=root mode=0644
+  notify: restart varnish

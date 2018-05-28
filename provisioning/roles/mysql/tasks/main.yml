@@ -1,0 +1,45 @@
+---
+# tasks file for mysql
+
+- name: Add the Percona signing keys
+  apt_key: url=https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x9334A25F8507EFA5 state=present id="8507EFA5"
+
+- name: Add Percona repo
+  apt_repository: repo='{{ item }} bionic main' state=present update_cache=yes
+  with_items:
+    - deb http://repo.percona.com/apt
+    - deb-src http://repo.percona.com/apt
+  when: ansible_os_family == "Debian"
+  tags: [mysql, packages]
+
+- name: Install the packages
+  apt: name="{{ item }}" state=present update_cache=yes
+  with_items: "{{ mysql_packages }}"
+  tags: [mysql,packages]
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Ensure mysql service is up
+  action: service name=mysql state=started
+  tags: [mysql,services]
+
+- name: Tuning and replication setup
+  template: src=local.cnf.j2 dest=/etc/mysql/conf.d/001-local.cnf owner=root group=root mode=0644
+  notify: restart mysql
+  tags: [mysql]
+
+- name: Create systemd override directory
+  file:
+    path: /etc/systemd/system/mysql.service.d
+    state: directory
+  tags: [mysql,services]
+
+- name: Add systemd override
+  copy: src=override.conf dest=/etc/systemd/system/mysql.service.d/override.conf owner=root group=root mode=0644
+  notify: restart mysql
+  tags: [mysql,services]
+
+- name: Update update-rc.d
+  shell: update-rc.d mysql defaults
+  become: yes
+  tags: [mysql,services]

@@ -1,0 +1,10 @@
+---
+# defaults file for users
+
+PROJECT_ROOT: "/var/www"
+
+PROJECT_USER: "netgen"
+PROJECT_USER_HOME: "{{ PROJECT_ROOT }}/{{ PROJECT_USER }}"
+PROJECT_USER_GROUPS: "www-data"
+
+PROJECT_KEYS:

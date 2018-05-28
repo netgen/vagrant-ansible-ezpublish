@@ -1,0 +1,31 @@
+---
+# vars file for php
+
+php_packages:
+  - php{{ PROJECT_PHP_VERSION }}-dev
+  - php{{ PROJECT_PHP_VERSION }}-cli
+  - php{{ PROJECT_PHP_VERSION }}-mysql
+  - php{{ PROJECT_PHP_VERSION }}-pgsql
+  - php-pear
+  - php{{ PROJECT_PHP_VERSION }}-curl
+  - php{{ PROJECT_PHP_VERSION }}-gd
+  - php{{ PROJECT_PHP_VERSION }}-intl
+  - php{{ PROJECT_PHP_VERSION }}-xsl
+  - imagemagick
+  - php{{ PROJECT_PHP_VERSION }}-imagick
+  - php{{ PROJECT_PHP_VERSION }}-cgi
+#  - php-http
+#  - php-http-request
+#  - php-http-request2
+#  - php-net-socket
+#  - php-net-url
+#  - php-net-url2
+  - php{{ PROJECT_PHP_VERSION }}-memcached
+  - php{{ PROJECT_PHP_VERSION }}-mbstring
+  - php{{ PROJECT_PHP_VERSION }}-bcmath
+
+php_xdebug:
+  - php{{ PROJECT_PHP_VERSION }}-xdebug
+
+php_fpm_packages:
+  - php{{ PROJECT_PHP_VERSION }}-fpm

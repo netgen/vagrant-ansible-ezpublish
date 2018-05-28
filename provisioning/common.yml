@@ -35,7 +35,8 @@
 
   roles:
     - common
-    - { role: apache, use_htaccess: false }
+#    - { role: apache, use_htaccess: false }
+    - { role: 'nginx', tags: 'nginx' }
     - ezfind-solr
 
   tasks:

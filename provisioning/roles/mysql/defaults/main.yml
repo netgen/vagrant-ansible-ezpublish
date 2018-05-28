@@ -1,0 +1,5 @@
+---
+# MySQL defaults
+
+mysql_server_id: "{{ ansible_default_ipv4.address.split('.')[3] }}"
+mysql_replication: false

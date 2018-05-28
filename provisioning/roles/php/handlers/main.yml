@@ -1,0 +1,18 @@
+---
+# handlers file for php
+
+- name: restart php-fpm
+  service: name="php{{ PROJECT_PHP_VERSION }}-fpm" state=restarted
+  become: yes
+
+- name: reload php-fpm
+  service: name="php{{ PROJECT_PHP_VERSION }}-fpm" state=reloaded
+  become: yes
+
+- name: restart Nginx
+  service: name=nginx state=restarted
+  become: yes
+
+- name: reload Nginx
+  service: name=nginx state=reloaded
+  become: yes
