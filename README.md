@@ -1,6 +1,8 @@
 vagrant-ansible-ezpublish
 =========================
 
+***DEPRECATED***: This repo is deprecated in favor of a [new repo](https://github.com/netgen/vagrant-ansible-ezplatform), configured to run eZ Platform 2.
+
 Vagrant box, with Ansible provisioning to setup new eZ Publish project.
 
 ## Authors
